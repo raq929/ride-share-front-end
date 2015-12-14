@@ -31,8 +31,7 @@ $(document).ready(function(){
       console.log(credentials);
       var cb = function (error, data) {
         if (error){
-          rsHelpers.errorHandler(error);
-          return false;
+          console.log(error);
         }
         $("#loginCheckbox").trigger('click');
         $('#message').text("You have logged in");
@@ -46,5 +45,21 @@ $(document).ready(function(){
       return false;
     });
 
+   $('#registrationForm').on('submit', function(e) {
+      e.preventDefault();
+      var credentials = rsHelpers.wrap('credentials', rsHelpers.form2object(this));
+      console.log(credentials);
+      rsapi.register(credentials, function(err, data){
+        if (err) {
+          console.log(err);
+        }
+        else {
+          $("#message").text("You have been registered!");
+          $("#registrationCheckbox").trigger('click');
+        }
+      }
+      );
+     
+  });
 
 });
