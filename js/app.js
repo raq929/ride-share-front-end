@@ -35,9 +35,9 @@ $(document).ready(function(){
           return false;
         }
         $("#loginCheckbox").trigger('click');
-        $("#loginCheckbox").hide();
         $('#message').text("You have logged in");
-        $('#logout').show();
+        $('#logout').css({display: 'inline'});
+        $("#loginLabel").css({display: 'none'});
         
         var user = new User(data.user.id, data.user.token);
       };
