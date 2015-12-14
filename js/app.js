@@ -18,12 +18,36 @@ var rsHelpers = {
 };
 
 
-
+var user;
+var rides;
 
 
 
 
 $(document).ready(function(){
+
+
+
+
+  
+  // sets up mapBox 
+  L.mapbox.accessToken = 'pk.eyJ1IjoicmFxOTI5IiwiYSI6ImNpaTYxZm9mMjAxa3R0eGtxY25reW12cXAifQ.g49YwXKsFMU2bcQDQdfaDw';
+  L.mapbox.map('map', 'mapbox.streets').setView([38.8929,-77.0252], 14);
+
+  //makes initial call to /rides
+  var ridesCallback = function (error, data) {
+    if (error){
+      console.log(error);
+    } else {
+      console.log(data);
+      rides = new Rides(data.rides);
+      destinations = rides.getDestinations;
+      console.log(destinations);
+    }
+  };
+
+  rsapi.getRides(ridesCallback);
+
 
   $('#loginForm').on('submit', function(e){
       e.preventDefault();
@@ -37,8 +61,7 @@ $(document).ready(function(){
         $('#message').text("You have logged in");
         $('#logout').css({display: 'inline'});
         $("#loginLabel").css({display: 'none'});
-        
-        var user = new User(data.user.id, data.user.token);
+        user = new User(data.user.id, data.user.token);
       };
 
       rsapi.login(credentials, cb);
@@ -60,6 +83,20 @@ $(document).ready(function(){
       }
       );
      
-  });
+   $('#logout').click(function(){
+       alert("You clicked!");
+      var cb = function(error, data){
+        if (error) {
+          $('#message').val('status: ' + error.status + ', error: ' +error.error);
+  
+        }  else {
+          user = null;
+        $('#logout').css({display: 'none'});
+        $("#loginLabel").css({display: 'inline'});
+        }
+      };
+      rsapi.logout(cb);
+    });
+});
 
 });
