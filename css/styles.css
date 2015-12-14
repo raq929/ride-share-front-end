@@ -47,6 +47,9 @@ nav label:hover {
   background: #d2ccfc;
 }
 
+#logout {
+  display: none;
+}
 
 form {
   
