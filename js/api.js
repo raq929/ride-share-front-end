@@ -39,5 +39,24 @@ var rsapi = {
         Authorization: 'Token token=' + user.currentToken
       }
     }, callback);
+  },
+
+  geocode: function(text){
+    this.ajax({
+      method:'GET',
+      url: 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + text + ".json?access_token=<pk.eyJ1IjoicmFxOTI5IiwiYSI6ImNpaTYxZm9mMjAxa3R0eGtxY25reW12cXAifQ.g49YwXKsFMU2bcQDQdfaDw"
+    });
+  },
+
+  getRides: function (callback) {
+    this.ajax({
+      method: 'GET',
+      url: this.rs + '/rides',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      dataType: 'json'
+    }, callback);
   }
+  
 };
