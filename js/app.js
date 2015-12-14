@@ -24,6 +24,7 @@ var rides;
 
 
 
+
 $(document).ready(function(){
 
 
@@ -39,10 +40,9 @@ $(document).ready(function(){
     if (error){
       console.log(error);
     } else {
-      console.log(data);
+      
       rides = new Rides(data.rides);
-      destinations = rides.getDestinations;
-      console.log(destinations);
+      destinations = rides.getDestinations();
     }
   };
 

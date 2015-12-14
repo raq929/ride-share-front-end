@@ -10,22 +10,24 @@ var Rides = function(ridesData) {
 };
 
 Rides.prototype.getDestinations = function() {
-  this.rides.map(function(ride){
+  var d = this.rides.map(function(ride){
     return {id: ride.id, 
       lat: ride.destination.lat, 
       lng: ride.destination.lng
     };
   });
+  return d;
 };
 
 Rides.prototype.getAddresses = function(){
-  this.rides.map(function(ride){
+  var a = this.rides.map(function(ride){
     return {
       id: ride.id,
       destination: ride.destination.address,
       start_point: ride.start_point.address
     };
   });
+  return a;
 };
 
 Rides.prototype.refresh = function(){
