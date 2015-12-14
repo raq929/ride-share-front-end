@@ -6,6 +6,8 @@
   <title>RideShare</title>
   <link rel="stylesheet" href="./css/setup.css">
   <link rel="stylesheet" href="./css/styles.css">
+  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
@@ -44,7 +46,7 @@
 
   <main class='row'>
   
-  <div id='map' class='column span_9_of_12'>
+  <div id='map' class='map column span_9_of_12'>
   <input type='text' id='address' placeholder='Address'>
   <input type='submit' for='address' value='Enter address'>
   <div id="message"></div>
@@ -57,15 +59,19 @@
  
 
 </body>
+
+<!-- MapBox -->
+<script>
+
+
+</script>
 <!-- jQuery -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha256-ivk71nXhz9nsyFDoYoGf2sbjrR9ddh+XDkCcfZxjvcM=" crossorigin="anonymous"></script>
 
 <!-- Local scripts -->
 <script src="./js/api.js" type = "application/javascript"></script>
-<!-- Local scripts -->
 <script src="./js/models.js" type = "application/javascript"></script>
-<!-- Local scripts -->
 <script src="./js/app.js" type = "application/javascript"></script>
 
 </html>

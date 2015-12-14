@@ -95,6 +95,7 @@ nav label {
   position: fixed;
   right: 0;
   top: 61px;
+  z-index:99;
 } 
 
 
@@ -108,8 +109,13 @@ main {
 
 aside {
  padding:61px;
+ margin: none;
 }
 
 .sidebar {
   background-color: #d2ccfc;
+}
+
+#map {
+  height: 100vh;
 }
