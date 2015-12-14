@@ -4,38 +4,51 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>RideShare</title>
+  <link rel="stylesheet" href="./css/setup.css">
   <link rel="stylesheet" href="./css/styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
-  <nav>
-    <header>
-        <ul>
-          <li>
-            <label for='loginCheckbox'>Login</label>
-            <input type='checkbox' id='loginCheckbox' class='hiddenCheckbox'>
-            <div id='loginDropdown' class='dropdown'>
-              <form id="loginForm" accept-charset="UTF-8">
-                <input type="text" placeholder="email" name="email">
-                <input type="password" placeholder="Password" name="password">
-                <input class="fancy-button" type="submit" id="sign-in" value="Sign In">
-              </form>
-            </div> 
-          </li>
-          <li>
-            <label for='registrationCheckbox'>Register</label>
-            <input type='checkbox' id='registrationCheckbox' class='hiddenCheckbox'>
-            <div id='registrationDropdown' class='dropdown'>
-              <form id="registrationForm" accept-charset="UTF-8">
-                <input  type="text" placeholder="email" name="email">
-                <input type="password" placeholder="Password" name="password">
-                <input type="password" placeholder="Confirm Password" name="password_confirmation">
-                <input class="fancy-button" type="submit" id="registerButton" value="Register">
-              </form>
-            </div> 
-          </li>
-        </ul>   
-      </nav>
-    </header>  
+  <header class='row'>
+    <nav>
+      <ul>
+        <li>
+          <label for='loginCheckbox'>Login</label>
+          <input type='checkbox' id='loginCheckbox' class='hiddenCheckbox'>
+          <div id='loginDropdown' class='dropdown'>
+            <form id="loginForm" accept-charset="UTF-8">
+              <input type="text" placeholder="email" name="email">
+              <input type="password" placeholder="Password" name="password">
+              <input class="fancy-button" type="submit" id="sign-in" value="Sign In">
+            </form>
+          </div> 
+        </li>
+        <li>
+          <label for='registrationCheckbox'>Register</label>
+          <input type='checkbox' id='registrationCheckbox' class='hiddenCheckbox'>
+          <div id='registrationDropdown' class='dropdown'>
+            <form id="registrationForm" accept-charset="UTF-8">
+              <input  type="text" placeholder="email" name="email">
+              <input type="password" placeholder="Password" name="password">
+              <input type="password" placeholder="Confirm Password" name="password_confirmation">
+              <input class="fancy-button" type="submit" id="registerButton" value="Register">
+            </form>
+          </div> 
+        </li>
+      </ul>   
+    </nav>
+  </header>
+
+  <main class='row'>
+  
+  <div id='map' class='column span_9_of_12'>
+  </div>
+  <aside class='column span_3_of_12 sidebar'>
+    <h2>Rides</h2>
+  </aside>
+  
+  </main>
+ 
+
 </body>
 </html>
