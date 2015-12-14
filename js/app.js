@@ -27,11 +27,11 @@ $(document).ready(function(){
 
   $('#loginForm').on('submit', function(e){
       e.preventDefault();
-      var credentials = rsHelpers.wrap('credentials', shsHelpers.form2object(this));
+      var credentials = rsHelpers.wrap('credentials', rsHelpers.form2object(this));
       console.log(credentials);
       var cb = function (error, data) {
         if (error){
-          shsHelpers.errorHandler(error);
+          rsHelpers.errorHandler(error);
           return false;
         }
         $("#loginCheckbox").trigger('click');
