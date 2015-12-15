@@ -74,7 +74,9 @@
   <input type='button' value='More' class='showData'>
   {{#if ride.seats_left}}
   {{#unless ride.isOwner}}
+  {{#unless ride.isPassenger}}
     <input type='button' value='Join Ride' data-rideId='{{ride.id}}'>
+  {{/unless}}
   {{/unless}}  
   {{/if}}
   {{#if ride.isPassenger}}

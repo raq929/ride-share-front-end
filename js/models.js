@@ -68,8 +68,10 @@ Rides.prototype.isOwner = function(){
 
 Rides.prototype.isPassenger = function(){
    if (user) {
-    this.rides.passengers.forEach(function(passenger){
-      if (passenger.id === ride.owner.id){
+    this.rides.forEach(function(ride){
+
+      if (ride.passengers.some(function(passenger){
+        return passenger.id === user.id})) {
         ride.isPassenger = true;
       } else {
         ride.isPassenger = false;
