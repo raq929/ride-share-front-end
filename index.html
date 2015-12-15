@@ -53,7 +53,6 @@
   </div>
   <aside id="ridesListHere" class='column span_3_of_12 sidebar'>
     <h2>Rides</h2>
-    <div class='ride'></div>
   </aside>
   
   </main>
@@ -72,7 +71,6 @@
     <li>Date: {{ride.departure_date_time}}</li>
     <li>Seats Available: {{ride.seats_left}}</li>
   </ul>
-
   <input type='button' value='More' class='showData'>
   {{#if ride.seats_left}}
   {{#unless ride.isOwner}}
