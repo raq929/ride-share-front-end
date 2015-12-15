@@ -1,4 +1,6 @@
-
+h2 {
+  font-size: 1.25em;
+}
 
 
 /* Button Styles */
@@ -95,7 +97,7 @@ nav label {
   position: fixed;
   right: 0;
   top: 61px;
-  z-index:99;
+  z-index:900;
 } 
 
 
@@ -108,7 +110,8 @@ main {
 }
 
 aside {
- padding:61px;
+ padding-top: 15px;
+ padding-left: 15px;
  margin: none;
 }
 
@@ -118,4 +121,11 @@ aside {
 
 #map {
   height: 100vh;
+}
+
+/* Ride styling */
+.ride {
+  margin-top: 12px;
+  padding: 2px;
+  width: 90%;
 }

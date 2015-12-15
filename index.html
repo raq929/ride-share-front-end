@@ -51,8 +51,9 @@
   <input type='submit' for='address' value='Enter address'>
   <div id="message"></div>
   </div>
-  <aside class='column span_3_of_12 sidebar'>
+  <aside id="ridesListHere" class='column span_3_of_12 sidebar'>
     <h2>Rides</h2>
+    <div class='ride'></div>
   </aside>
   
   </main>
@@ -62,43 +63,52 @@
 
 <!-- Handlebars Templates -->
 <script id="ridesList" type="text/x-handlebars-template">
-{{#if ride.seats_available}}
+<h2>Rides</h2>
 {{#each rides as |ride|}}
 <div class="ride">
-<ul>
-  <li>Going to: {{ride.destination.address}}</li>
-  <li>From: {{ride.start_point.address}}</li>
-  <li>Date: {{ride.departure_date_time}}</li>
-  <li>Seats Available: {{ride.seats_available}}</li>
-</ul>
-<input type='button' value='More' class='showData'>
-<input type='button' value='Join Ride' data-rideId='{{ride.id}}'>
-<div class='hidden'>
-<ul>
-<li>{{#if ride.event}}Event: {{ride.event}}{{/if}}</li>
-<li>Driver: {{ride.owner.email}}</li>
-<li>{{#if ride.passengers as |passenger|}}
-  Passengers:
   <ul>
-   {{#each passengers}}
-    <li>{{passenger.email}}</li>
-   {{/each}} 
+    <li>Going to: {{ride.destination.address}}</li>
+    <li>From: {{ride.start_point.address}}</li>
+    <li>Date: {{ride.departure_date_time}}</li>
+    <li>Seats Available: {{ride.seats_left}}</li>
   </ul>
-</li>
-</ul>
-</div>
+
+  <input type='button' value='More' class='showData'>
+  {{#if ride.seats_left}}
+  {{#unless ride.isOwner}}
+    <input type='button' value='Join Ride' data-rideId='{{ride.id}}'>
+  {{/unless}}  
+  {{/if}}
+  {{#if ride.isOwner}}
+    <input type='button' value='Edit Ride' data-rideId='{{ride.id}}'>
+  {{/if}}
+  <div class='hidden'>
+    <ul>
+      {{#if ride.event}}<li>Event: {{ride.event}}</li>{{/if}}
+      <li>Driver: {{ride.owner.email}}</li>
+      <li>{{#if ride.passengers}}
+        Passengers:
+        <ul>
+         {{#each passengers as |passenger|}}
+          <li>{{passenger.email}}</li>
+         {{/each}} 
+        </ul>
+      </li>
+      {{/if}}
+    </ul>
+  </div>
 </div>
 {{/each}}
-{{/if}}
-
-
-
 
 </script>
 
 <!-- jQuery -->
 
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha256-ivk71nXhz9nsyFDoYoGf2sbjrR9ddh+XDkCcfZxjvcM=" crossorigin="anonymous"></script>
+
+<!-- Handlebars -->
+<script src="./assets/handlebars-v4.0.4.js"></script>
 
 <!-- Local scripts -->
 <script src="./js/api.js" type = "application/javascript"></script>

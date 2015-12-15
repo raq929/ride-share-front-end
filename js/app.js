@@ -27,7 +27,13 @@ var rides;
 
 $(document).ready(function(){
 
-
+  ridesListTemplate = Handlebars.compile($("#ridesList").html());
+  Handlebars.registerHelper('isOwner', function(ride){
+    if (this.owner.id = user.id){
+      return true;
+    }
+    else return false;
+  });
 
 
   
@@ -40,9 +46,16 @@ $(document).ready(function(){
     if (error){
       console.log(error);
     } else {
-      
       rides = new Rides(data.rides);
+      //get destinations for map
       destinations = rides.getDestinations();
+      //calculate seats available and if owner is current user
+      // attach those values to ride
+      rides.seatsLeft();
+      rides.isOwner();
+      //compile handlebars template
+      var newHTML = ridesListTemplate(rides);
+      $("#ridesListHere").html(newHTML);
     }
   };
 
@@ -57,15 +70,19 @@ $(document).ready(function(){
         if (error){
           console.log(error);
         }
+        //hide login form and label
         $("#loginCheckbox").trigger('click');
-        $('#message').text("You have logged in");
-        $('#logout').css({display: 'inline'});
         $("#loginLabel").css({display: 'none'});
+        $('#message').text("You have logged in");
+        // display logout 
+        $('#logout').css({display: 'inline'});
+        //get rides
+        rsapi.getRides(ridesCallback);
+        
         user = new User(data.user.id, data.user.token);
       };
 
       rsapi.login(credentials, cb);
-      return false;
     });
 
    $('#registrationForm').on('submit', function(e) {

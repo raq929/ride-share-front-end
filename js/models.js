@@ -30,11 +30,36 @@ Rides.prototype.getAddresses = function(){
   return a;
 };
 
+Rides.prototype.seatsLeft = function(){
+  this.rides.forEach(function(ride){
+    seatsLeft = ride.spots_available - ride.passengers.length;
+    console.log("Seats left " + seatsLeft);
+    if (seatsLeft >= 0){
+      ride.seats_left = seatsLeft;
+    }
+  });
+
+  
+};
+
 Rides.prototype.refresh = function(){
   var now = Date.now;
   if (now - this.date >= 10000){
       rsapi.getRides(ridesCallback);
     }
 };
+
+Rides.prototype.isOwner = function(){
+  if (user) {
+    this.rides.forEach(function(ride){
+      if (user.id === ride.owner.id){
+        ride.isOwner = true;
+      } else {
+        ride.isOwner = false;
+      }
+    });
+  }
+};
+  
 
 
