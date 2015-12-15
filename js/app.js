@@ -39,7 +39,7 @@ var setLocationClickHandlers = function(locations, map){
       locale.on('click', function(e) {
       // 1. center the map on the selected marker.
       map.panTo(locale.getLatLng());
-      
+
       
     });
   });
@@ -77,17 +77,17 @@ $(document).ready(function(){
       // attach those values to ride
       rides.seatsLeft();
       rides.isOwner();
+      rides.isPassenger();
+      
       //compile handlebars template
       var newHTML = ridesListTemplate(rides);
       $("#ridesListHere").html(newHTML);
+
       //get GeoJson and put markers on the map
       rides.getDestinationGeoJSON();
       var locations = L.mapbox.featureLayer().addTo(map);
       locations.setGeoJSON(geoJSON);
       setLocationClickHandlers(locations, map);
-      $('ride2').on('click', function(){
-        alert("You clicked!");
-      });
     }
   };
 

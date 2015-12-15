@@ -66,6 +66,18 @@ Rides.prototype.isOwner = function(){
   }
 };
 
+Rides.prototype.isPassenger = function(){
+   if (user) {
+    this.rides.passengers.forEach(function(passenger){
+      if (passenger.id === ride.owner.id){
+        ride.isPassenger = true;
+      } else {
+        ride.isPassenger = false;
+      }
+    });
+  }
+};
+
 // "type": "FeatureCollection",
 // "features": [
 //   {

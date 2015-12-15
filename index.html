@@ -77,6 +77,9 @@
     <input type='button' value='Join Ride' data-rideId='{{ride.id}}'>
   {{/unless}}  
   {{/if}}
+  {{#if ride.isPassenger}}
+  <input type='button' value='Leave Ride' data-rideId='{{ride.id}}'>
+  {{/if}}
   {{#if ride.isOwner}}
     <input type='button' value='Edit Ride' data-rideId='{{ride.id}}'>
   {{/if}}
