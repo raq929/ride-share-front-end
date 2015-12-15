@@ -53,6 +53,7 @@
   </div>
   <aside id="ridesListHere" class='column span_3_of_12 sidebar'>
     <h2>Rides</h2>
+
   </aside>
   
   </main>
@@ -63,10 +64,11 @@
 <!-- Handlebars Templates -->
 <script id="ridesList" type="text/x-handlebars-template">
 <h2>Rides</h2>
+<input type="button" id="createRideButton" value="New Ride">
 {{#each rides as |ride|}}
 <div class="ride" id="ride{{ride.id}}">
   <ul>
-    <li>Going to: {{ride.destination.address}}</a></li>
+    <li>Going to: {{ride.address}}</a></li>
     <li>From: {{ride.start_point.address}}</li>
     <li>Date: {{ride.departure_date_time}}</li>
     <li>Seats Available: {{ride.seats_left}}</li>
@@ -104,6 +106,32 @@
 {{/each}}
 
 </script>
+
+<script id="createEditRide" type="text/x-handlebars-template">
+</script>
+<h2>New Ride</h2>
+<form>
+  <h3>Destination</h3>
+  <input type="text" class="Address" id="destinationAddress" name="address" placeholder="Destinationaddress">
+  <label for="destinationLat">Latitude:</label>
+  <input type="text" class="latLng" id="lat" name="DestinationLat" placeholder="Lat">
+  <label for="destinationLat">Longitude:</label>
+  <input type="text" class="latLng" id="lng" name="lng" placeholder="Lng">
+  <h3>Start From</h3>
+  <input type="text" class="Address" id="startAddress" name="address" placeholder="Starting address">
+  <label for="startLat">Latitude:</label>
+  <input type="text" class="latLng" id="startLat" name="lat" placeholder="lng">
+  <label for="startLat">Longitude:</label>
+  <input type="text" class="latLng"  id="startLng" name="lng" placeholder="Lng">
+  <label for="length">Length of Trip:</label>
+  <input type="text" name="length" placeholder="3 hours">
+  <input type="text" name="departure_date_time" placeholder="MM/DD/YYYY 2:00pm">
+  <label for="event">Event:</label>
+  <input type="text" name="event" placeholder="National Square Dance Convention">
+  <label for="seats">Seats available:</label>
+  <input type="text" name="spots_available" placeholder="3">
+</form>
+
 
 <!-- jQuery -->
 
