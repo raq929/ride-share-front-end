@@ -21,6 +21,35 @@ var rsHelpers = {
 var user;
 var rides;
 
+var rides = $("ridesListHere");
+
+var setLocationClickHandlers = function(locations, map){
+    locations.eachLayer(function(locale) {
+      // find the div with the same id as the layer
+      var prop = locale.feature.properties;
+      console.log(prop)
+      id = prop.id;
+      console.log(id)
+      rideDiv = $("#ride" + id);
+
+      rideDiv.on('click',function() {
+      // 1. Toggle an active class for `listing`. View the source in the demo link for example.
+
+      // 2. When a menu item is clicked, animate the map to center
+      // its associated locale and open its popup.
+      map.setView(locale.getLatLng(), 12);
+      locale.openPopup();
+      });
+
+      locale.on('click', function(e) {
+      // 1. center the map on the selected marker.
+      map.panTo(locale.getLatLng());
+
+      // 2. Set active the markers associated listing.
+      // setActive(listing);
+    });
+  });
+}; 
 
 
 
@@ -39,7 +68,8 @@ $(document).ready(function(){
   
   // sets up mapBox 
   L.mapbox.accessToken = 'pk.eyJ1IjoicmFxOTI5IiwiYSI6ImNpaTYxZm9mMjAxa3R0eGtxY25reW12cXAifQ.g49YwXKsFMU2bcQDQdfaDw';
-  var map = L.mapbox.map('map', 'mapbox.streets').setView([42.3601,-71.0589], 7);
+  var map = L.mapbox.map('map', 'mapbox.streets')
+  map.setView([42.3601,-71.0589], 7);
 
   //makes initial call to /rides
   var ridesCallback = function (error, data) {
@@ -58,7 +88,12 @@ $(document).ready(function(){
       $("#ridesListHere").html(newHTML);
       //get GeoJson and put markers on the map
       rides.getDestinationGeoJSON();
-      map.featureLayer.setGeoJSON(geoJSON);
+      var locations = L.mapbox.featureLayer().addTo(map);
+      locations.setGeoJSON(geoJSON);
+      setLocationClickHandlers(locations, map);
+      $('ride2').on('click', function(){
+        alert("You clicked!");
+      });
     }
   };
 

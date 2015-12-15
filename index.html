@@ -65,9 +65,9 @@
 <script id="ridesList" type="text/x-handlebars-template">
 <h2>Rides</h2>
 {{#each rides as |ride|}}
-<div class="ride">
+<div class="ride" id="ride{{ride.id}}">
   <ul>
-    <li>Going to: {{ride.destination.address}}</li>
+    <li>Going to: {{ride.destination.address}}</a></li>
     <li>From: {{ride.start_point.address}}</li>
     <li>Date: {{ride.departure_date_time}}</li>
     <li>Seats Available: {{ride.seats_left}}</li>

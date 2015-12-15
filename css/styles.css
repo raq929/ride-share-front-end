@@ -129,3 +129,27 @@ aside {
   padding: 2px;
   width: 90%;
 }
+
+/* Map styles */
+.leaflet-popup-content {
+  font:400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+  padding:0;
+  width:200px;
+}
+.leaflet-popup-content-wrapper {
+  padding:0;
+}
+.leaflet-popup-content h3 {
+  background:#91c949;
+  color:#fff;
+  margin:0;
+  display:block;
+  padding:10px;
+  border-radius:3px 3px 0 0;
+  font-weight:700;
+  margin-top:-15px;
+}
+.leaflet-popup-content div {
+  padding:10px;
+}
+.leaflet-container .leaflet-marker-icon { cursor:pointer; }

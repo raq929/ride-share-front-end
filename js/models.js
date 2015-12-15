@@ -100,6 +100,7 @@ Rides.prototype.getDestinationGeoJSON = function(){
     },
     "properties": {
       "address": ride.destination.address,
+      "id": ride.id
     }
 
 
