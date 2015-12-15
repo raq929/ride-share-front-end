@@ -3,6 +3,11 @@ var User = function(id, token){
   this.token = token;
 };
 
+var geoJSON = {
+  "type": "FeatureCollection",
+  "features":[]
+};
+
 var Rides = function(ridesData) {
   this.rides=ridesData;
   this.date = Date.now();
@@ -60,6 +65,47 @@ Rides.prototype.isOwner = function(){
     });
   }
 };
-  
+
+// "type": "FeatureCollection",
+// "features": [
+//   {
+//     "type": "Feature",
+//     "geometry": {
+//       "type": "Point",
+//       "coordinates": [
+//         -77.034084142948,
+//         38.909671288923
+//       ]
+//     },
+//     "properties": {
+//       "phoneFormatted": "(202) 234-7336",
+//       "phone": "2022347336",
+//       "address": "1471 P St NW",
+//       "city": "Washington DC",
+//       "country": "United States",
+//       "crossStreet": "at 15th St NW",
+//       "postalCode": "20005",
+//       "state": "D.C."
+//     }
+//   }  
+
+Rides.prototype.getDestinationGeoJSON = function(){
+  this.rides.forEach (function(ride){
+    geoJSON.features.push({
+
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [ride.destination.lng, ride.destination.lat]
+    },
+    "properties": {
+      "address": ride.destination.address,
+    }
+
+
+    });
+  });
+
+};
 
 

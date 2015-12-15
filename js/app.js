@@ -39,7 +39,7 @@ $(document).ready(function(){
   
   // sets up mapBox 
   L.mapbox.accessToken = 'pk.eyJ1IjoicmFxOTI5IiwiYSI6ImNpaTYxZm9mMjAxa3R0eGtxY25reW12cXAifQ.g49YwXKsFMU2bcQDQdfaDw';
-  L.mapbox.map('map', 'mapbox.streets').setView([38.8929,-77.0252], 14);
+  var map = L.mapbox.map('map', 'mapbox.streets').setView([42.3601,-71.0589], 7);
 
   //makes initial call to /rides
   var ridesCallback = function (error, data) {
@@ -56,6 +56,9 @@ $(document).ready(function(){
       //compile handlebars template
       var newHTML = ridesListTemplate(rides);
       $("#ridesListHere").html(newHTML);
+      //get GeoJson and put markers on the map
+      rides.getDestinationGeoJSON();
+      map.featureLayer.setGeoJSON(geoJSON);
     }
   };
 
