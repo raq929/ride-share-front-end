@@ -61,7 +61,40 @@
 </body>
 
 <!-- Handlebars Templates -->
+<script id="ridesList" type="text/x-handlebars-template">
+{{#if ride.seats_available}}
+{{#each rides as |ride|}}
+<div class="ride">
+<ul>
+  <li>Going to: {{ride.destination.address}}</li>
+  <li>From: {{ride.start_point.address}}</li>
+  <li>Date: {{ride.departure_date_time}}</li>
+  <li>Seats Available: {{ride.seats_available}}</li>
+</ul>
+<input type='button' value='More' class='showData'>
+<input type='button' value='Join Ride' data-rideId='{{ride.id}}'>
+<div class='hidden'>
+<ul>
+<li>{{#if ride.event}}Event: {{ride.event}}{{/if}}</li>
+<li>Driver: {{ride.owner.email}}</li>
+<li>{{#if ride.passengers as |passenger|}}
+  Passengers:
+  <ul>
+   {{#each passengers}}
+    <li>{{passenger.email}}</li>
+   {{/each}} 
+  </ul>
+</li>
+</ul>
+</div>
+</div>
+{{/each}}
+{{/if}}
 
+
+
+
+</script>
 
 <!-- jQuery -->
 
