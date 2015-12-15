@@ -21,6 +21,7 @@ var rsapi = {
     }, callback);
   },
 
+
   login: function (credentials, callback) {
     this.ajax({
       method: 'POST',
@@ -41,11 +42,16 @@ var rsapi = {
     }, callback);
   },
 
-  geocode: function(text){
+  createRide: function(data, callback){
     this.ajax({
-      method:'GET',
-      url: 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + text + ".json?access_token=<pk.eyJ1IjoicmFxOTI5IiwiYSI6ImNpaTYxZm9mMjAxa3R0eGtxY25reW12cXAifQ.g49YwXKsFMU2bcQDQdfaDw"
-    });
+      method: 'POST',
+      url: this.rs + '/rides',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify(data),
+      dataType: 'json'
+    }, callback);
   },
 
   getRides: function (callback) {

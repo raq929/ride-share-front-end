@@ -51,19 +51,39 @@ var setLocationClickHandlers = function(locations, map){
 $(document).ready(function(){
 
   ridesListTemplate = Handlebars.compile($("#ridesList").html());
-  Handlebars.registerHelper('isOwner', function(ride){
-    if (this.owner.id = user.id){
-      return true;
-    }
-    else return false;
+  createEditRideTemplate = Handlebars.compile($("#createEditRide").html());
+
+  $("#ridesListHere").on('click', '#createRideButton', function(){
+    $("#createRideForm").show();
   });
 
+  $("#ridesListHere").on('click', '.showData', function(){
+    
+  });
 
+   // e.preventDefault();
+   //  cb =function(err,data){
+   //    if (error){
+   //      console.log(error);
+   //    } else {
+   //      console.log(data);
+   //    }
+   //  };
+   //  console.log(rsHelpers.form2object(this));
+   //  //rsapi.createRide(data, cb);
   
   // sets up mapBox 
   L.mapbox.accessToken = 'pk.eyJ1IjoicmFxOTI5IiwiYSI6ImNpaTYxZm9mMjAxa3R0eGtxY25reW12cXAifQ.g49YwXKsFMU2bcQDQdfaDw';
-  var map = L.mapbox.map('map', 'mapbox.streets')
+  var map = L.mapbox.map('map', 'mapbox.streets');
   map.setView([42.3601,-71.0589], 7);
+  var geocoderControl = L.mapbox.geocoderControl('mapbox.places', {
+        autocomplete: true
+    });
+  geocoderControl.addTo(map);
+  geocoderControl.on('found', function(res) {
+    console.log(res.results.features[0]);
+  });
+
 
   //makes initial call to /rides
   var ridesCallback = function (error, data) {
