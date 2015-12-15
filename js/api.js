@@ -35,9 +35,9 @@ var rsapi = {
   logout: function(callback) {
     this.ajax({
       method: 'DELETE',
-      url: this.rs + '/logout/' + user.userID,
+      url: this.rs + '/logout/' + user.id,
       headers: {
-        Authorization: 'Token token=' + user.currentToken
+        Authorization: 'Token token=' + user.token
       }
     }, callback);
   },
@@ -47,6 +47,7 @@ var rsapi = {
       method: 'POST',
       url: this.rs + '/rides',
       headers: {
+        Authorization: 'Token token=' + user.token,
         "Content-Type": "application/json"
       },
       data: JSON.stringify(data),

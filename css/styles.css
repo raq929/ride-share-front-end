@@ -134,6 +134,10 @@ aside > div:hover {
   width: 90%;
 }
 
+.hidden {
+  display: none;
+}
+
 /* Map styles */
 .leaflet-popup-content {
   font:400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;

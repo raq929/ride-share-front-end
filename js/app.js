@@ -13,6 +13,18 @@ var rsHelpers = {
         data[$(this).attr('name')] = $(this).val();
       }
     });
+    if(data.daddress){
+      data.destination = {
+        lat: data.dlat,
+        lng: data.dlng,
+        address:  data.daddress
+      };
+      data["start_point"] = {
+        lat: data.slat,
+        lng: data.slng,
+        address: data.saddress
+      };
+    }
     return data;
   }
 };
@@ -61,16 +73,21 @@ $(document).ready(function(){
     
   });
 
-   // e.preventDefault();
-   //  cb =function(err,data){
-   //    if (error){
-   //      console.log(error);
-   //    } else {
-   //      console.log(data);
-   //    }
-   //  };
-   //  console.log(rsHelpers.form2object(this));
-   //  //rsapi.createRide(data, cb);
+  $("#ridesListHere").on('submit', "#createRideForm",function(e){
+    e.preventDefault();
+    cb =function(err,data){
+      if (err){
+        console.log(error);
+      } else {
+        console.log(data);
+      }
+    };
+    var data = rsHelpers.wrap("ride",rsHelpers.form2object(this));
+
+    rsapi.createRide(data, cb);
+  });
+
+  
   
   // sets up mapBox 
   L.mapbox.accessToken = 'pk.eyJ1IjoicmFxOTI5IiwiYSI6ImNpaTYxZm9mMjAxa3R0eGtxY25reW12cXAifQ.g49YwXKsFMU2bcQDQdfaDw';
@@ -117,7 +134,6 @@ $(document).ready(function(){
   $('#loginForm').on('submit', function(e){
       e.preventDefault();
       var credentials = rsHelpers.wrap('credentials', rsHelpers.form2object(this));
-      console.log(credentials);
       var cb = function (error, data) {
         if (error){
           console.log(error);

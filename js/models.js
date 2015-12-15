@@ -38,7 +38,6 @@ Rides.prototype.getAddresses = function(){
 Rides.prototype.seatsLeft = function(){
   this.rides.forEach(function(ride){
     seatsLeft = ride.spots_available - ride.passengers.length;
-    console.log("Seats left " + seatsLeft);
     if (seatsLeft >= 0){
       ride.seats_left = seatsLeft;
     }
