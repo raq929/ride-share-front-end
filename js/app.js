@@ -79,7 +79,7 @@ $(document).ready(function(){
       if (err){
         console.log(error);
       } else {
-        console.log(data);
+        rsapi.getRides(ridesCallback);
       }
     };
     var data = rsHelpers.wrap("ride",rsHelpers.form2object(this));
