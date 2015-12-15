@@ -115,6 +115,10 @@ aside {
  margin: none;
 }
 
+aside > div:hover {
+  background-color: cornflowerblue;
+}
+
 .sidebar {
   background-color: #d2ccfc;
 }
@@ -153,3 +157,5 @@ aside {
   padding:10px;
 }
 .leaflet-container .leaflet-marker-icon { cursor:pointer; }
+
+
