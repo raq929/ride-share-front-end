@@ -27,26 +27,20 @@ var setLocationClickHandlers = function(locations, map){
     locations.eachLayer(function(locale) {
       // find the div with the same id as the layer
       var prop = locale.feature.properties;
-      console.log(prop)
       id = prop.id;
-      console.log(id)
       rideDiv = $("#ride" + id);
 
       rideDiv.on('click',function() {
-      // 1. Toggle an active class for `listing`. View the source in the demo link for example.
-
-      // 2. When a menu item is clicked, animate the map to center
-      // its associated locale and open its popup.
-      map.setView(locale.getLatLng(), 12);
-      locale.openPopup();
+    
+        map.setView(locale.getLatLng(), 12);
+        locale.openPopup();
       });
 
       locale.on('click', function(e) {
       // 1. center the map on the selected marker.
       map.panTo(locale.getLatLng());
-
-      // 2. Set active the markers associated listing.
-      // setActive(listing);
+      
+      
     });
   });
 }; 
