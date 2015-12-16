@@ -115,10 +115,6 @@ aside {
  margin: none;
 }
 
-aside > div:hover {
-  background-color: cornflowerblue;
-}
-
 .sidebar {
   background-color: #d2ccfc;
 }
@@ -133,6 +129,11 @@ aside > div:hover {
   margin-top: 12px;
   padding: 2px;
   width: 90%;
+  border-radius: 5px;
+}
+
+.ride:hover {
+  background-color: cornflowerblue;
 }
 
 .hidden {
