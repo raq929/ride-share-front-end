@@ -43,19 +43,26 @@ var setLocationClickHandlers = function(locations, map){
     var ride = rides.findById(id);
 
     rideDiv.on('click',function() {
+      // clear any previous rideLine from the map
       if(rideLine){
         map.removeLayer(rideLine);
       }
       
-      map.setView(locale.getLatLng(), 6);
+      var startLatLng = [parseFloat(ride.start_point.lng), parseFloat(ride.start_point.lat)];
+      var destinationLatLng =  [locale._latlng.lng, locale._latlng.lat];
+
+      console.log([(startLatLng[1] + destinationLatLng[1])/2,(startLatLng[0]+ destinationLatLng[0])/2]);
+      //zoom to a point midway bewteen the start and destination
+      map.setView([(startLatLng[1] + destinationLatLng[1])/2,(startLatLng[0]+ destinationLatLng[0])/2], 6);
 
       var featureLayer = L.mapbox.featureLayer().addTo(map);
+      // adds start point and line to the map
       var geojson = [
         {
           "type": "Feature",
           "geometry": {
             "type": "Point",
-            "coordinates": [ride.start_point.lng, ride.start_point.lat]
+            "coordinates": startLatLng
           },
           "properties": {
             "marker-color": "#ff8888"
@@ -65,8 +72,8 @@ var setLocationClickHandlers = function(locations, map){
           "geometry": {
             "type": "LineString",
             "coordinates": [
-              [ride.start_point.lng, ride.start_point.lat],
-              [locale._latlng.lng, locale._latlng.lat]
+               startLatLng,
+              destinationLatLng
             ]
           },
           "properties": {
@@ -76,6 +83,7 @@ var setLocationClickHandlers = function(locations, map){
           }
         }
       ];
+      // assigns start point and line to a variable so they can be accessed later
       rideLine = featureLayer.setGeoJSON(geojson);
 
       
