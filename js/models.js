@@ -36,16 +36,6 @@ Rides.prototype.getAddresses = function(){
   return a;
 };
 
-Rides.prototype.seatsLeft = function(){
-  this.rides.forEach(function(ride){
-    seatsLeft = ride.spots_available - ride.passengers.length;
-    if (seatsLeft >= 0){
-      ride.seats_left = seatsLeft;
-    }
-  });
-
-  
-};
 
 Rides.prototype.refresh = function(){
   var now = Date.now;
@@ -54,31 +44,6 @@ Rides.prototype.refresh = function(){
     }
 };
 
-Rides.prototype.isOwner = function(){
-  if (user) {
-    this.rides.forEach(function(ride){
-      if (user.id === ride.owner.id){
-        ride.isOwner = true;
-      } else {
-        ride.isOwner = false;
-      }
-    });
-  }
-};
-
-Rides.prototype.isPassenger = function(){
-   if (user) {
-    this.rides.forEach(function(ride){
-
-      if (ride.passengers.some(function(passenger){
-        return passenger.id === user.id})) {
-        ride.isPassenger = true;
-      } else {
-        ride.isPassenger = false;
-      }
-    });
-  }
-};
 
 Rides.prototype.findById = function(id){
   id = parseInt(id);
@@ -88,6 +53,34 @@ Rides.prototype.findById = function(id){
   });
 };
 
+Rides.prototype.setProperties = function(){
+  if (user) {
+    this.rides.forEach(function(ride){
+      // sets the number of passengers on the ride
+      ride.numberOfPassengers = ride.passengers.length;
+      // sets the number of seats left
+      seatsLeft = ride.spots_available - ride.passengers.length;
+      if (seatsLeft >= 0){
+        ride.seats_left = seatsLeft;
+      } else {
+        ride.seats_left = 0;
+      }
+      // determine whether the user is a passenger  
+      if (ride.passengers.some(function(passenger){
+        return passenger.id === user.id})) {
+        ride.isPassenger = true;
+      } else {
+        ride.isPassenger = false;
+      }
+      //determine whether th user owns this ride
+      if (user.id === ride.owner.id){
+        ride.isOwner = true;
+      } else {
+        ride.isOwner = false;
+      } 
+    });
+  }  
+};
 
 // "type": "FeatureCollection",
 // "features": [
