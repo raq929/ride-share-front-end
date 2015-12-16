@@ -14,6 +14,16 @@ var Rides = function(ridesData) {
 
 };
 
+var initRideWindowData = function(rideId){
+  data =  {
+      moreClicked: false,
+      rideClicked: false
+    }; 
+
+  rideWindowDataStorage[rideId] = data;
+};
+var rideWindowDataStorage = {};
+
 
 Rides.prototype.getDestinations = function() {
   var d = this.rides.map(function(ride){

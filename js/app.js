@@ -51,7 +51,6 @@ var setLocationClickHandlers = function(locations, map){
       var startLatLng = [parseFloat(ride.start_point.lng), parseFloat(ride.start_point.lat)];
       var destinationLatLng =  [locale._latlng.lng, locale._latlng.lat];
 
-      console.log([(startLatLng[1] + destinationLatLng[1])/2,(startLatLng[0]+ destinationLatLng[0])/2]);
       //zoom to a point midway bewteen the start and destination
       map.setView([(startLatLng[1] + destinationLatLng[1])/2,(startLatLng[0]+ destinationLatLng[0])/2], 6);
 
@@ -115,7 +114,7 @@ $(document).ready(function(){
   // Compiles and displays edit ride form
   $("#ridesListHere").on('click', '.editRideButton', function(e){
     e.preventDefault();
-    id = this.dataset.id;
+    var id = this.dataset.id;
     //find the ride with the id stored in the button. 
     ride = rides.findById(id);
     // Compile a form template using that data.
@@ -207,6 +206,14 @@ $(document).ready(function(){
    
     rsapi.leaveRide(rideId, cb);
   });
+
+  $("#ridesListHere").on('click', ".showMoreButton", function(){
+    var id = this.dataset.id;
+    var storage = rideWindowDataStorage[id];
+
+    storage.moreClicked? storage.moreClicked = false : storage.moreClicked = true;
+    $("#more" + id).toggleClass('hidden');
+  });
   
   // sets up mapBox 
   L.mapbox.accessToken = 'pk.eyJ1IjoicmFxOTI5IiwiYSI6ImNpaTYxZm9mMjAxa3R0eGtxY25reW12cXAifQ.g49YwXKsFMU2bcQDQdfaDw';
@@ -246,7 +253,6 @@ $(document).ready(function(){
       // sets additional properties on each ride
       // isOwner, isPassnger, seats_left, numberOfPassengers
       rides.setProperties();
-
       
       //compile handlebars template
       var newHTML = ridesListTemplate(rides);
@@ -257,6 +263,24 @@ $(document).ready(function(){
       var locations = L.mapbox.featureLayer().addTo(map);
       locations.setGeoJSON(geoJSON);
       setLocationClickHandlers(locations, map);
+
+      $(document).ready(function(){
+        // restores data from last refresh
+        // initializes data store for new rides
+      rides.rides.forEach(function(ride){
+        id = ride.id;
+       
+        if (rideWindowDataStorage[id]){
+          if (rideWindowDataStorage[id].moreClicked){
+            
+            $("#more" + id).toggleClass('hidden');
+          }
+        } else {
+          initRideWindowData(id);
+        }
+      });
+
+      });
     }
   };
 
@@ -273,7 +297,7 @@ $(document).ready(function(){
         //hide login form and label
         $("#loginCheckbox").trigger('click');
         $("#loginLabel").css({display: 'none'});
-        $('#message').text("You have logged in");
+    
         // display logout and new ride button
         $('#logout').css({display: 'inline'});
         $('#newRideButton').show();
