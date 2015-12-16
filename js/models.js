@@ -14,6 +14,7 @@ var Rides = function(ridesData) {
 
 };
 
+
 Rides.prototype.getDestinations = function() {
   var d = this.rides.map(function(ride){
     return {id: ride.id, 
@@ -78,6 +79,15 @@ Rides.prototype.isPassenger = function(){
     });
   }
 };
+
+Rides.prototype.findById = function(id){
+  id = parseInt(id);
+  return this.rides.filter(function(ride){
+    
+    return (ride.id === id);
+  });
+};
+
 
 // "type": "FeatureCollection",
 // "features": [
