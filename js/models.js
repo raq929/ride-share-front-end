@@ -115,6 +115,7 @@ Rides.prototype.getDestinationGeoJSON = function(){
       "coordinates": [ride.destination.lng, ride.destination.lat]
     },
     "properties": {
+      "marker-color": "#0A42DD",
       "address": ride.destination.address,
       "id": ride.id
     }
