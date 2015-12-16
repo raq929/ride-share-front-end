@@ -98,8 +98,12 @@ $(document).ready(function(){
     });
   geocoderControl.addTo(map);
   geocoderControl.on('found', function(res) {
-    console.log(res.results.features[0]);
+    result = res.results.features[0];
+    $("#output").html("<p>"+ result.place_name + 
+      "</p><p>Latitude: " + result.geometry.coordinates[1] +
+      "</p><p>Longitude: " + result.geometry.coordinates[0]);
   });
+
 
 
   //makes initial call to /rides
