@@ -67,7 +67,7 @@ $(document).ready(function(){
 
   // Click Handlers
   // Shows Create Ride form
-  $("#ridesListHere").on('click', '#createRideButton', function(){
+  $("#newRideButton").on('click', function(){
     $("#createRideForm").show();
   });
 
@@ -85,13 +85,14 @@ $(document).ready(function(){
   });
 
   //Sends api call for creating a ride 
-  $("#ridesListHere").on('submit', "#createRideForm",function(e){
+  $("#createRideForm").submit(function(e){
     e.preventDefault();
     cb =function(err,data){
       if (err){
         console.log(err);
       } else {
         rsapi.getRides(ridesCallback);
+        $("#createRideForm").hide();
       }
     };
     var data = rsHelpers.wrap("ride",rsHelpers.form2object(this));
@@ -227,8 +228,9 @@ $(document).ready(function(){
         $("#loginCheckbox").trigger('click');
         $("#loginLabel").css({display: 'none'});
         $('#message').text("You have logged in");
-        // display logout 
+        // display logout and new ride button
         $('#logout').css({display: 'inline'});
+        $('#newRideButton').show();
         //get rides
         rsapi.getRides(ridesCallback);
         
