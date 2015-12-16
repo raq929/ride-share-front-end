@@ -55,6 +55,19 @@ var rsapi = {
     }, callback);
   },
 
+  editRide: function(data, callback){
+    this.ajax({
+      method: 'PATCH',
+      url: this.rs + '/rides',
+      headers: {
+        Authorization: 'Token token=' + user.token,
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify(data),
+      dataType: 'json'
+    }, callback);
+  },
+
   getRides: function (callback) {
     this.ajax({
       method: 'GET',
