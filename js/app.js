@@ -151,7 +151,7 @@ $(document).ready(function(){
   });
 
   // sets click handler for  leaverides button
-  $("#ridesListHere").on('click', ".leaveRideButton",function(e){
+  $("#ridesListHere").on('click', ".leaveRideButton", function(e){
     e.preventDefault();
     cb =function(err,data){
       if (err){
@@ -163,7 +163,7 @@ $(document).ready(function(){
     }; 
     rideId = this.dataset.id;
    
-    rsapi.joinRide(rideId, cb);
+    rsapi.leaveRide(rideId, cb);
   });
   
   // sets up mapBox 

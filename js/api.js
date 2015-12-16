@@ -104,5 +104,19 @@ var rsapi = {
       data: JSON.stringify(data),
       dataType: 'json'
     }, callback);
+  },
+
+  leaveRide: function(rideId, callback){
+    var data = {ride_id: rideId};
+    this.ajax({
+      method: 'DELETE',
+      url: this.rs + '/ride_passengers',
+      headers: {
+        Authorization: 'Token token=' + user.token,
+        "Content-Type": "application/json"
+      },
+      data: JSON.stringify(data),
+      dataType: 'json'
+    }, callback);
   }
 };
