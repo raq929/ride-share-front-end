@@ -55,8 +55,39 @@
   </pre>
   <div id="message"></div>
   </div>
-  <aside id="ridesListHere" class='column span_3_of_12 sidebar'>
+  <aside class='column span_3_of_12 sidebar'>
     <h2>Rides</h2>
+   
+      <input type="button" id="createRideButton" value="New Ride">
+      <div> 
+        <form id="createRideForm" class="hidden">
+          <h2>New Ride</h2>
+          <h3>Destination</h3>
+          <input type="text" class="Address" id="destinationAddress" name="daddress" placeholder="Destination address">
+          <label for="destinationLat">Latitude:</label>
+          <input type="text" class="latLng" id="lat" name="dlat" placeholder="Lat">
+          <label for="destinationLat">Longitude:</label>
+          <input type="text" class="latLng" id="lng" name="dlng" placeholder="Lng">
+          <h3>Start From:</h3>
+          <input type="text" class="Address" id="startAddress" name="saddress" placeholder="Starting address">
+          <label for="startLat">Latitude:</label>
+          <input type="text" class="latLng" id="startLat" name="slat" placeholder="lng">
+          <label for="startLat">Longitude:</label>
+          <input type="text" class="latLng"  id="startLng" name="slng" placeholder="Lng">
+          <label for="length">Length of Trip:</label>
+          <input type="text" name="length" placeholder="3 hours">
+          <input type="text" name="departure_date_time" placeholder="MM/DD/YYYY 2:00pm">
+          <label for="event">Event:</label>
+          <input type="text" name="event" placeholder="National Square Dance Convention">
+          <label for="seats">Seats available:</label>
+          <input type="text" name="spots_available" placeholder="3">
+          <input type="submit" id="submitRideButton" value="Edit Ride">
+        </form>
+      </div>
+      <div id="editRideFormGoesHere">
+      </div>
+      <div id="ridesListHere">
+      </div>
 
   </aside>
   
@@ -67,40 +98,36 @@
 
 <!-- Handlebars Templates -->
 <script id="ridesList" type="text/x-handlebars-template">
-<h2>Rides</h2>
-<input type="button" id="createRideButton" value="New Ride">
 
-<form id="createRideForm" class="hidden">
-  <h2>New Ride</h2>
-  <h3>Destination</h3>
-  <input type="text" class="Address" id="destinationAddress" name="daddress" placeholder="Destination address">
-  <label for="destinationLat">Latitude:</label>
-  <input type="text" class="latLng" id="lat" name="dlat" placeholder="Lat">
-  <label for="destinationLat">Longitude:</label>
-  <input type="text" class="latLng" id="lng" name="dlng" placeholder="Lng">
-  <h3>Start From:</h3>
-  <input type="text" class="Address" id="startAddress" name="saddress" placeholder="Starting address">
-  <label for="startLat">Latitude:</label>
-  <input type="text" class="latLng" id="startLat" name="slat" placeholder="lng">
-  <label for="startLat">Longitude:</label>
-  <input type="text" class="latLng"  id="startLng" name="slng" placeholder="Lng">
-  <label for="length">Length of Trip:</label>
-  <input type="text" name="length" placeholder="3 hours">
-  <input type="text" name="departure_date_time" placeholder="MM/DD/YYYY 2:00pm">
-  <label for="event">Event:</label>
-  <input type="text" name="event" placeholder="National Square Dance Convention">
-  <label for="seats">Seats available:</label>
-  <input type="text" name="spots_available" placeholder="3">
-  <input type="submit" id="submitRideButton" value="Create Ride">
-</form>
 {{#each rides as |ride|}}
 <div class="ride" id="ride{{ride.id}}">
   <ul>
-    <li>Going to: {{ride.destination.address}}</a></li>
+    <li>Going to: {{ride.destination.address}}</li>
     <li>From: {{ride.start_point.address}}</li>
     <li>Date: {{ride.departure_date_time}}</li>
-    <li>Seats Available: {{ride.seats_left}}</li>
   </ul>
+ 
+  <div class='hidden'>
+    <ul>
+      <li>Seats Available: {{ride.seats_left}}</li>
+      {{#if ride.event}}<li>Event: {{ride.event}}</li>{{/if}}
+      <li>Driver: {{ride.owner.email}}</li>
+      <li>
+      {{#if ride.passengers}}
+        Passengers: 
+         {{#if ride.isOwner}}
+         <ul>
+            {{#each passengers as |passenger|}}
+              <li>{{passenger.email}}</li>
+            {{/each}} 
+          </ul>
+        {{else}}
+          {{numberOfPassengers}}
+        {{/if}}
+      </li>
+      {{/if}}
+    </ul>
+  </div>
   <input type='button' value='More' class='showData'>
   {{#if ride.seats_left}}
   {{#unless ride.isOwner}}
@@ -113,31 +140,39 @@
   <input type='button' value='Leave Ride' data-rideId='{{ride.id}}'>
   {{/if}}
   {{#if ride.isOwner}}
-    <input type='button' value='Edit Ride' data-rideId='{{ride.id}}'>
+    <input type='button' value='Edit Ride' class='editRideButton' data-id='{{ride.id}}'>
   {{/if}}
-  <div class='hidden'>
-    <ul>
-      {{#if ride.event}}<li>Event: {{ride.event}}</li>{{/if}}
-      <li>Driver: {{ride.owner.email}}</li>
-      <li>{{#if ride.passengers}}
-        Passengers:
-        <ul>
-         {{#each passengers as |passenger|}}
-          <li>{{passenger.email}}</li>
-         {{/each}} 
-        </ul>
-      </li>
-      {{/if}}
-    </ul>
-  </div>
 </div>
 {{/each}}
 
 </script>
 
-<script id="createEditRide" type="text/x-handlebars-template">
-</script>
-
+<script id="editRideForm" type="text/x-handlebars-template">
+<form id="editRideForm" data-id="{{id}}">
+    <h2>Edit Ride</h2>
+    <h3>Destination</h3>
+    <input type="text" class="Address" id="destinationAddress" name="daddress" value="{{destination.address}}">
+    <label for="destinationLat">Latitude:</label>
+    <input type="text" class="latLng" id="lat" name="dlat" value="{{destination.lat}}">
+    <label for="destinationLat">Longitude:</label>
+    <input type="text" class="latLng" id="lng" name="dlng" value="{{destination.lng}}">
+    <h3>Start From:</h3>
+    <input type="text" class="Address" id="startAddress" name="saddress" value="{{start_point.address}}">
+    <label for="startLat">Latitude:</label>
+    <input type="text" class="latLng" id="startLat" name="slat" value="{{start_point.lat}}">
+    <label for="startLat">Longitude:</label>
+    <input type="text" class="latLng"  id="startLng" name="slng" value="{{start_point.lng}}">
+    <label for="length">Length of Trip:</label>
+    <input type="text" name="length" placeholder="3 hours" value="{{length}}">
+    <input type="text" name="departure_date_time" placeholder="MM/DD/YYYY 2:00pm" value="{{departure_date_time}}">
+    <label for="event">Event:</label>
+    <input type="text" name="event" placeholder="National Square Dance Convention" value="{{event}}">
+    <label>Passengers: {{numberOfPassengers}}</label>
+    <br/>
+    <label for="seats">Seats available:</label>
+    <input type="text" name="seats_left" value="{{seats_left}}">
+    <input type="submit" data-id="{{id}}" value="Edit Ride">
+  </form>
 </script>
 
 <!-- jQuery -->
