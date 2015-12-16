@@ -119,6 +119,7 @@ $(document).ready(function(){
     rsapi.editRide(rideData, rideId, cb);
   });
 
+  // sets click handler for delete rides button
   $("#ridesListHere").on('click', ".deleteRideButton",function(e){
     e.preventDefault();
     cb =function(err,data){
@@ -131,6 +132,38 @@ $(document).ready(function(){
     }; 
     rideId = this.dataset.id;
     rsapi.deleteRide(rideId, cb);
+  });
+
+  // sets click handler for join rides button
+  $("#ridesListHere").on('click', ".joinRideButton",function(e){
+    e.preventDefault();
+    cb =function(err,data){
+      if (err){
+        console.log(err);
+      }
+      else {
+        rsapi.getRides(ridesCallback);
+      } 
+    }; 
+    rideId = this.dataset.id;
+
+    rsapi.joinRide(rideId, cb);
+  });
+
+  // sets click handler for  leaverides button
+  $("#ridesListHere").on('click', ".leaveRideButton",function(e){
+    e.preventDefault();
+    cb =function(err,data){
+      if (err){
+        console.log(err);
+      }
+      else {
+        rsapi.getRides(ridesCallback);
+      } 
+    }; 
+    rideId = this.dataset.id;
+   
+    rsapi.joinRide(rideId, cb);
   });
   
   // sets up mapBox 
