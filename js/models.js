@@ -50,7 +50,7 @@ Rides.prototype.findById = function(id){
   return this.rides.filter(function(ride){
     
     return (ride.id === id);
-  });
+  })[0];
 };
 
 Rides.prototype.setProperties = function(){
