@@ -36,25 +36,56 @@ var rides;
 var rides = $("ridesListHere");
 
 var setLocationClickHandlers = function(locations, map){
-    locations.eachLayer(function(locale) {
-      // find the div with the same id as the layer
-      var prop = locale.feature.properties;
-      id = prop.id;
-      rideDiv = $("#ride" + id);
+  locations.eachLayer(function(locale) {
+    // find the div with the same id as the layer
+    var prop = locale.feature.properties;
+    id = prop.id;
+    rideDiv = $("#ride" + id);
+    var ride = rides.findById(id);
 
-      rideDiv.on('click',function() {
-    
-        map.setView(locale.getLatLng(), 12);
-        locale.openPopup();
-      });
+    rideDiv.on('click',function() {
+  
+      map.setView(locale.getLatLng(), 6);
 
-      locale.on('click', function(e) {
-      // 1. center the map on the selected marker.
-      map.panTo(locale.getLatLng());
+      var featureLayer = L.mapbox.featureLayer().addTo(map);
+      var geojson = [
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [ride.start_point.lng, ride.start_point.lat]
+          },
+          "properties": {
+            "marker-color": "#ff8888"
+          }
+        }, {
+          "type": "Feature",
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [ride.start_point.lng, ride.start_point.lat],
+              [locale._latlng.lng, locale._latlng.lat]
+            ]
+          },
+          "properties": {
+            "stroke": "#3D5AD0",
+            "stroke-opacity": 0.8,
+            "stroke-width": 4
+          }
+        }
+      ];
+      featureLayer.setGeoJSON(geojson);
 
       
+      locale.on('click', function(e) {
+
+        // 1. center the map on the selected marker.
+        map.panTo(locale.getLatLng()); 
+       
+
+      });
     });
-  });
+  });  
 }; 
 
 
@@ -79,7 +110,7 @@ $(document).ready(function(){
     ride = rides.findById(id);
     // Compile a form template using that data.
     // findById returns an array of one item, so pass that item to the template
-    var newHTML = editRideFormTemplate(ride[0]);
+    var newHTML = editRideFormTemplate(ride);
     $("#editRideFormGoesHere").html(newHTML);
 
   });
@@ -114,7 +145,7 @@ $(document).ready(function(){
     var rideId = this.dataset.id;
     var rideData = rsHelpers.wrap("ride",rsHelpers.form2object(this));
     // Add the current number of passengers to the seats left indicated by user. Put it in the correct format for the server.
-    rideData.ride.spots_available = parseInt(rides.findById(rideId)[0].numberOfPassengers) + parseInt(rideData.ride.seats_left);
+    rideData.ride.spots_available = parseInt(rides.findById(rideId).numberOfPassengers) + parseInt(rideData.ride.seats_left);
 
   
     rsapi.editRide(rideData, rideId, cb);
@@ -169,24 +200,29 @@ $(document).ready(function(){
   
   // sets up mapBox 
   L.mapbox.accessToken = 'pk.eyJ1IjoicmFxOTI5IiwiYSI6ImNpaTYxZm9mMjAxa3R0eGtxY25reW12cXAifQ.g49YwXKsFMU2bcQDQdfaDw';
+  // tells mapbox which tiles to use
   var map = L.mapbox.map('map', 'mapbox.streets');
+  //sets the initial coordinates and zoom
   map.setView([42.3601,-71.0589], 7);
+  // adds the geocoder 
   var geocoderControl = L.mapbox.geocoderControl('mapbox.places', {
         autocomplete: true
     });
   geocoderControl.addTo(map);
+  //pipes geocoder results to an output window
   geocoderControl.on('found', function(res) {
     result = res.results.features[0];
+    //defines which results are displated and how
     $("#output").html("<p id='foundAddress'>"+ result.place_name + 
       "</p><p id='foundLat'>Latitude: " +
       result.geometry.coordinates[1] +
       "</p><p id='foundLng'>Longitude: " + 
       result.geometry.coordinates[0]);
-    $('#pre.ui-output').show();
+    
+    
     $('#sendToDestination').show();
     $('#sendToStart').show();
   });
-
 
 
   //makes initial call to /rides
