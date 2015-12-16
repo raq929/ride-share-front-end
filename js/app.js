@@ -99,9 +99,14 @@ $(document).ready(function(){
   geocoderControl.addTo(map);
   geocoderControl.on('found', function(res) {
     result = res.results.features[0];
-    $("#output").html("<p>"+ result.place_name + 
-      "</p><p>Latitude: " + result.geometry.coordinates[1] +
-      "</p><p>Longitude: " + result.geometry.coordinates[0]);
+    $("#output").html("<p id='foundAddress'>"+ result.place_name + 
+      "</p><p id='foundLat'>Latitude: " +
+      result.geometry.coordinates[1] +
+      "</p><p id='foundLng'>Longitude: " + 
+      result.geometry.coordinates[0]);
+    $('#pre.ui-output').show();
+    $('#sendToDestination').show();
+    $('#sendToStart').show();
   });
 
 
