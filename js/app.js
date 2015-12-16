@@ -63,21 +63,33 @@ var setLocationClickHandlers = function(locations, map){
 $(document).ready(function(){
 
   ridesListTemplate = Handlebars.compile($("#ridesList").html());
-  createEditRideTemplate = Handlebars.compile($("#createEditRide").html());
+  editRideFormTemplate = Handlebars.compile($("#editRideForm").html());
 
+  // Click Handlers
+  // Shows Create Ride form
   $("#ridesListHere").on('click', '#createRideButton', function(){
     $("#createRideForm").show();
   });
 
-  $("#ridesListHere").on('click', '.showData', function(){
-    
+  // Compiles and displays edit ride form
+  $("#ridesListHere").on('click', '.editRideButton', function(e){
+    e.preventDefault();
+    id = this.dataset.id;
+    //find the ride with the id stored in the button. 
+    ride = rides.findById(id);
+    // Compile a form template using that data.
+    // findById returns an array of one item, so pass that item to the template
+    var newHTML = editRideFormTemplate(ride[0]);
+    $("#editRideFormGoesHere").html(newHTML);
+
   });
 
+  //Sends api call for creating a ride 
   $("#ridesListHere").on('submit', "#createRideForm",function(e){
     e.preventDefault();
     cb =function(err,data){
       if (err){
-        console.log(error);
+        console.log(err);
       } else {
         rsapi.getRides(ridesCallback);
       }
@@ -85,6 +97,25 @@ $(document).ready(function(){
     var data = rsHelpers.wrap("ride",rsHelpers.form2object(this));
 
     rsapi.createRide(data, cb);
+  });
+
+  $("#editRideFormGoesHere").on('submit', "#editRideForm",function(e){
+    e.preventDefault();
+    cb =function(err,data){
+      if (err){
+        console.log(err);
+      } else {
+        $("#editRideFormGoesHere").html('');
+        rsapi.getRides(ridesCallback);
+      }
+    };
+    var rideId = this.dataset.id;
+    var rideData = rsHelpers.wrap("ride",rsHelpers.form2object(this));
+    // Add the current number of passengers to the seats left indicated by user. Put it in the correct format for the server.
+    rideData.ride.spots_available = parseInt(rides.findById(rideId)[0].numberOfPassengers) + parseInt(rideData.ride.seats_left);
+
+  
+    rsapi.editRide(rideData, rideId, cb);
   });
 
   
@@ -119,11 +150,10 @@ $(document).ready(function(){
       rides = new Rides(data.rides);
       //get destinations for map
       destinations = rides.getDestinations();
-      //calculate seats available and if owner is current user
-      // attach those values to ride
-      rides.seatsLeft();
-      rides.isOwner();
-      rides.isPassenger();
+      // sets additional properties on each ride
+      // isOwner, isPassnger, seats_left, numberOfPassengers
+      rides.setProperties();
+
       
       //compile handlebars template
       var newHTML = ridesListTemplate(rides);
