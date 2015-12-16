@@ -32,8 +32,7 @@ var rsHelpers = {
 
 var user;
 var rides;
-
-var rides = $("ridesListHere");
+var rideLine;
 
 var setLocationClickHandlers = function(locations, map){
   locations.eachLayer(function(locale) {
@@ -44,7 +43,10 @@ var setLocationClickHandlers = function(locations, map){
     var ride = rides.findById(id);
 
     rideDiv.on('click',function() {
-  
+      if(rideLine){
+        map.removeLayer(rideLine);
+      }
+      
       map.setView(locale.getLatLng(), 6);
 
       var featureLayer = L.mapbox.featureLayer().addTo(map);
@@ -74,7 +76,7 @@ var setLocationClickHandlers = function(locations, map){
           }
         }
       ];
-      featureLayer.setGeoJSON(geojson);
+      rideLine = featureLayer.setGeoJSON(geojson);
 
       
       locale.on('click', function(e) {
