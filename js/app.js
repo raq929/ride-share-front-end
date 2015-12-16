@@ -99,6 +99,7 @@ $(document).ready(function(){
     rsapi.createRide(data, cb);
   });
 
+  // sends api call to edit a ride
   $("#editRideFormGoesHere").on('submit', "#editRideForm",function(e){
     e.preventDefault();
     cb =function(err,data){
@@ -118,7 +119,19 @@ $(document).ready(function(){
     rsapi.editRide(rideData, rideId, cb);
   });
 
-  
+  $("#ridesListHere").on('click', ".deleteRideButton",function(e){
+    e.preventDefault();
+    cb =function(err,data){
+      if (err){
+        console.log(err);
+      }
+      else {
+        rsapi.getRides(ridesCallback);
+      } 
+    }; 
+    rideId = this.dataset.id;
+    rsapi.deleteRide(rideId, cb);
+  });
   
   // sets up mapBox 
   L.mapbox.accessToken = 'pk.eyJ1IjoicmFxOTI5IiwiYSI6ImNpaTYxZm9mMjAxa3R0eGtxY25reW12cXAifQ.g49YwXKsFMU2bcQDQdfaDw';

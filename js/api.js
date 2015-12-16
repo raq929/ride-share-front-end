@@ -68,6 +68,18 @@ var rsapi = {
     }, callback);
   },
 
+  deleteRide: function(rideId,  callback){
+    this.ajax({
+      method: 'DELETE',
+      url: this.rs + '/rides/' + rideId,
+      headers: {
+        Authorization: 'Token token=' + user.token,
+      },
+      dataType: 'json'
+    }, callback);
+  },
+
+
   getRides: function (callback) {
     this.ajax({
       method: 'GET',
