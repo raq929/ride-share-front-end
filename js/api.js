@@ -55,10 +55,10 @@ var rsapi = {
     }, callback);
   },
 
-  editRide: function(data, callback){
+  editRide: function(data,  rideId,  callback){
     this.ajax({
       method: 'PATCH',
-      url: this.rs + '/rides',
+      url: this.rs + '/rides/' + rideId,
       headers: {
         Authorization: 'Token token=' + user.token,
         "Content-Type": "application/json"
