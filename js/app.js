@@ -113,150 +113,7 @@ $(document).ready(function(){
   ridesListTemplate = Handlebars.compile($("#ridesList").html());
   editRideFormTemplate = Handlebars.compile($("#editRideForm").html());
 
-  // Click Handlers
-  // Shows Create Ride form
-  $("#newRideButton").on('click', function(){
-    $("#createRideForm").show();
-  });
-
-  // Compiles and displays edit ride form
-  $("#ridesListHere").on('click', '.editRideButton', function(e){
-    e.preventDefault();
-    var id = this.dataset.id;
-    //find the ride with the id stored in the button. 
-    ride = rides.findById(id);
-    // Compile a form template using that data.
-    // findById returns an array of one item, so pass that item to the template
-    var newHTML = editRideFormTemplate(ride);
-    $("#editRideFormGoesHere").html(newHTML);
-
-  });
-
-  //Sends api call for creating a ride 
-  $("#createRideForm").submit(function(e){
-    e.preventDefault();
-    cb =function(err,data){
-      if (err){
-        console.log(err);
-      } else {
-        rsapi.getRides(ridesCallback);
-        $("#createRideForm").hide();
-      }
-    };
-    var data = rsHelpers.wrap("ride",rsHelpers.form2object(this));
-
-    rsapi.createRide(data, cb);
-  });
-
-  // sends api call to edit a ride
-  $("#editRideFormGoesHere").on('submit', "#editRideForm",function(e){
-    e.preventDefault();
-    cb =function(err,data){
-      if (err){
-        console.log(err);
-      } else {
-        $("#editRideFormGoesHere").html('');
-        rsapi.getRides(ridesCallback);
-      }
-    };
-    var rideId = this.dataset.id;
-    var rideData = rsHelpers.wrap("ride",rsHelpers.form2object(this));
-    // Add the current number of passengers to the seats left indicated by user. Put it in the correct format for the server.
-    rideData.ride.spots_available = parseInt(rides.findById(rideId).numberOfPassengers) + parseInt(rideData.ride.seats_left);
-
-  
-    rsapi.editRide(rideData, rideId, cb);
-  });
-
-  $("#sendToDestination").on('click', function(){
-    // get address info from output box
-    address = $('#foundAddress').text();
-    lat = $('#foundLat').text();
-    lng = $('#foundLng').text();
-    // send to new ride form
-    $("#newDestinationAddress").val(address);
-    $("#newDestinationLng").val(lng);
-    $("#newDestinationLat").val(lat);
-    // send to edit ride form
-    $("#editDestinationAddress").val(address);
-    $("#editDestinationLng").val(lng);
-    $("#editDestinationLat").val(lat);
-  });
-
-  $("#sendToStart").on('click', function(){
-    // get address info from output box
-    address = $('#foundAddress').text();
-    lat = $('#foundLat').text();
-    lng = $('#foundLng').text();
-    // send to new ride form
-    $("#newStartAddress").val(address);
-    $("#newStartLng").val(lng);
-    $("#newStartLat").val(lat);
-    // send to edit ride form
-    $("#editStartAddress").val(address);
-    $("#editStartLng").val(lng);
-    $("#editStartLat").val(lat);
-  });
-
-  // sets click handler for delete rides button
-  $("#ridesListHere").on('click', ".deleteRideButton",function(e){
-    e.preventDefault();
-    cb =function(err,data){
-      if (err){
-        console.log(err);
-      }
-      else {
-        rsapi.getRides(ridesCallback);
-      } 
-    }; 
-    rideId = this.dataset.id;
-    rsapi.deleteRide(rideId, cb);
-  });
-
-  // sets click handler for join rides button
-  $("#ridesListHere").on('click', ".joinRideButton",function(e){
-    e.preventDefault();
-    cb =function(err,data){
-      if (err){
-        console.log(err);
-      }
-      else {
-        rsapi.getRides(ridesCallback);
-      } 
-    }; 
-    rideId = this.dataset.id;
-
-    rsapi.joinRide(rideId, cb);
-  });
-
-  // sets click handler for  leaverides button
-  $("#ridesListHere").on('click', ".leaveRideButton", function(e){
-    e.preventDefault();
-    cb =function(err,data){
-      if (err){
-        console.log(err);
-      }
-      else {
-        rsapi.getRides(ridesCallback);
-      } 
-    }; 
-    rideId = this.dataset.id;
-   
-    rsapi.leaveRide(rideId, cb);
-  });
-
- // click handler for More button
-  $("#ridesListHere").on('click', ".showMoreButton", function(){
-    // stores whether or not it has been clicked
-    var id = this.dataset.id;
-    var storage = rideWindowDataStorage[id];
-
-    storage.moreClicked? storage.moreClicked = false : storage.moreClicked = true;
-    // toggles hidden property of the div
-    $("#more" + id).toggleClass('hidden');
-  });
-  
-  // sets up mapBox 
+ // sets up mapBox 
   L.mapbox.accessToken = 'pk.eyJ1IjoicmFxOTI5IiwiYSI6ImNpaTYxZm9mMjAxa3R0eGtxY25reW12cXAifQ.g49YwXKsFMU2bcQDQdfaDw';
   // tells mapbox which tiles to use
   var map = L.mapbox.map('map', 'mapbox.streets');
@@ -326,7 +183,152 @@ $(document).ready(function(){
 
   rsapi.getRides(ridesCallback);
 
+  // CLICK HANDLERS
+  // Shows Create Ride form
+  $("#newRideButton").on('click', function(){
+    $("#createRideForm").show();
+  });
 
+  // Compiles and displays edit ride form
+  $("#ridesListHere").on('click', '.editRideButton', function(e){
+    e.preventDefault();
+    var id = this.dataset.id;
+    //find the ride with the id stored in the button. 
+    ride = rides.findById(id);
+    // Compile a form template using that data.
+    // findById returns an array of one item, so pass that item to the template
+    var newHTML = editRideFormTemplate(ride);
+    $("#editRideFormGoesHere").html(newHTML);
+
+  });
+
+  //Sends api call for creating a ride 
+  $("#createRideForm").submit(function(e){
+    e.preventDefault();
+    cb =function(err,data){
+      if (err){
+        console.log(err);
+      } else {
+        rsapi.getRides(ridesCallback);
+        $("#createRideForm").hide();
+      }
+    };
+    var data = rsHelpers.wrap("ride",rsHelpers.form2object(this));
+
+    rsapi.createRide(data, cb);
+  });
+
+  // sends api call to edit a ride
+  $("#editRideFormGoesHere").on('submit', "#editRideForm",function(e){
+    e.preventDefault();
+    cb =function(err,data){
+      if (err){
+        console.log(err);
+      } else {
+        $("#editRideFormGoesHere").html('');
+        rsapi.getRides(ridesCallback);
+      }
+    };
+    var rideId = this.dataset.id;
+    var rideData = rsHelpers.wrap("ride",rsHelpers.form2object(this));
+    // Add the current number of passengers to the seats left indicated by user. Put it in the correct format for the server.
+    rideData.ride.spots_available = parseInt(rides.findById(rideId).numberOfPassengers) + parseInt(rideData.ride.seats_left);
+
+  
+    rsapi.editRide(rideData, rideId, cb);
+  });
+
+  // sends address data to forms
+  $("#sendToDestination").on('click', function(){
+    // get address info from output box
+    address = $('#foundAddress').text();
+    lat = $('#foundLat').text();
+    lng = $('#foundLng').text();
+    // send to new ride form
+    $("#newDestinationAddress").val(address);
+    $("#newDestinationLng").val(lng);
+    $("#newDestinationLat").val(lat);
+    // send to edit ride form
+    $("#editDestinationAddress").val(address);
+    $("#editDestinationLng").val(lng);
+    $("#editDestinationLat").val(lat);
+  });
+
+  $("#sendToStart").on('click', function(){
+    // get address info from output box
+    address = $('#foundAddress').text();
+    lat = $('#foundLat').text();
+    lng = $('#foundLng').text();
+    // send to new ride form
+    $("#newStartAddress").val(address);
+    $("#newStartLng").val(lng);
+    $("#newStartLat").val(lat);
+    // send to edit ride form
+    $("#editStartAddress").val(address);
+    $("#editStartLng").val(lng);
+    $("#editStartLat").val(lat);
+  });
+
+  // sets click handler for delete rides button
+  $("#ridesListHere").on('click', ".deleteRideButton",function(e){
+    e.preventDefault();
+    cb =function(err,data){
+      if (err){
+        console.log(err);
+      }
+      else {
+        rsapi.getRides(ridesCallback);
+      } 
+    }; 
+    rideId = this.dataset.id;
+    rsapi.deleteRide(rideId, cb);
+  });
+
+  // sets click handler for join rides button
+  $("#ridesListHere").on('click', ".joinRideButton",function(e){
+    e.preventDefault();
+    cb =function(err,data){
+      if (err){
+        console.log(err);
+      }
+      else {
+        rsapi.getRides(ridesCallback);
+      } 
+    }; 
+    rideId = this.dataset.id;
+
+    rsapi.joinRide(rideId, cb);
+  });
+
+  // sets click handler for  leave rides button
+  $("#ridesListHere").on('click', ".leaveRideButton", function(e){
+    e.preventDefault();
+    cb =function(err,data){
+      if (err){
+        console.log(err);
+      }
+      else {
+        rsapi.getRides(ridesCallback);
+      } 
+    }; 
+    rideId = this.dataset.id;
+   
+    rsapi.leaveRide(rideId, cb);
+  });
+
+ // click handler for More button
+  $("#ridesListHere").on('click', ".showMoreButton", function(){
+    // stores whether or not it has been clicked
+    var id = this.dataset.id;
+    var storage = rideWindowDataStorage[id];
+
+    storage.moreClicked? storage.moreClicked = false : storage.moreClicked = true;
+    // toggles hidden property of the div
+    $("#more" + id).toggleClass('hidden');
+  });
+  
+ 
+  // login form click handler
   $('#loginForm').on('submit', function(e){
       e.preventDefault();
       var credentials = rsHelpers.wrap('credentials', rsHelpers.form2object(this));
@@ -362,8 +364,8 @@ $(document).ready(function(){
           $("#message").text("You have been registered!");
           $("#registrationCheckbox").trigger('click');
         }
-      }
-      );
+      });
+    });  
      
    $('#logout').click(function(){
        alert("You clicked!");
@@ -378,7 +380,5 @@ $(document).ready(function(){
         }
       };
       rsapi.logout(cb);
-    });
-});
-
+  });
 });
