@@ -25,8 +25,8 @@
             </form>
           </div> 
         </li>
-        <li id='logout'>
-          <label>Logout</label>
+        <li >
+          <label id='logout'>Logout</label>
         </li>
         <li>
           <label for='registrationCheckbox'>Register</label>
@@ -49,9 +49,11 @@
   <div id='map' class='map column span_9_of_12'>
  
   
-  <pre id='output' class='ui-output hidden'>
-    <input type='button' class='hidden' id='sendToDestination' value='Send to Destination'> 
-    <input type='button' class='hidden' id='sendToStart' value='Send to Starting Address'>
+  <pre class='ui-output hidden'>
+    <div id='output' >
+    </div>
+    <input type='button' id='sendToDestination' value='Send to Destination'> 
+    <input type='button' id='sendToStart' value='Send to Starting Address'>
   </pre>
   <div id="message"></div>
   </div>
@@ -63,19 +65,21 @@
         <form id="createRideForm" class="hidden">
           <h2>New Ride</h2>
           <h3>Destination</h3>
-          <input type="text" class="Address" id="destinationAddress" name="daddress" placeholder="Destination address">
-          <label for="destinationLat">Latitude:</label>
-          <input type="text" class="latLng" id="lat" name="dlat" placeholder="Lat">
-          <label for="destinationLat">Longitude:</label>
-          <input type="text" class="latLng" id="lng" name="dlng" placeholder="Lng">
-          <h3>Start From:</h3>
-          <input type="text" class="Address" id="startAddress" name="saddress" placeholder="Starting address">
-          <label for="startLat">Latitude:</label>
-          <input type="text" class="latLng" id="startLat" name="slat" placeholder="lng">
-          <label for="startLat">Longitude:</label>
-          <input type="text" class="latLng"  id="startLng" name="slng" placeholder="Lng">
-          <label for="length">Length of Trip:</label>
-          <input type="text" name="length" placeholder="3 hours">
+          <input type="text" class="Address" id="newDestinationAddress" name="daddress" placeholder="Destination address">
+          <label for="newDestinationLat">Latitude:</label>
+          <input type="text" class="latLng" id="newDestinationLat" name="dlat" placeholder="Lat">
+          <label for="newDestinationLng">Longitude:</label>
+          <input type="text" class="latLng" id="newDestinationLng" name="dlng" placeholder="Lng">
+          <label for:"newStartAddress">Start From:</label>
+          <input type="text" class="Address" id="newStartAddress" name="saddress" placeholder="Starting address">
+          <label for="newStartLat">Latitude:</label>
+          <input type="text" class="latLng" id="newStartLat" name="slat" placeholder="lat">
+          <label for="newStartLng">Longitude:</label>
+          <input type="text" class="latLng"  id="newStartLng" name="slng" placeholder="Lng">
+          <label for="newLength">Length of Trip:</label>
+          <input type="text" name="newLength" placeholder="3 hours">
+          <<label for="departureDateTime">Departure Date / Time</label>
+          input
           <input type="text" name="departure_date_time" placeholder="MM/DD/YYYY 2:00pm">
           <label for="event">Event:</label>
           <input type="text" name="event" placeholder="National Square Dance Convention">
@@ -106,8 +110,8 @@
     <li>From: {{ride.start_point.address}}</li>
     <li>Date: {{ride.departure_date_time}}</li>
   </ul>
- 
-  <div class='hidden'>
+  {{#if ride.edited}}
+  <div id='more{{ride.id}}'class='hidden'>
     <ul>
       <li>Seats Available: {{ride.seats_left}}</li>
       {{#if ride.event}}<li>Event: {{ride.event}}</li>{{/if}}
@@ -122,13 +126,16 @@
             {{/each}} 
           </ul>
         {{else}}
-          {{numberOfPassengers}}
+          {{ride.numberOfPassengers}}
         {{/if}}
       </li>
       {{/if}}
     </ul>
   </div>
-  <input type='button' value='More' class='showData'>
+</div> 
+<div class ="buttons"> 
+  <input type='button' value='More' class='showMoreButton' data-id='{{ride.id}}'>
+  {{/if}}
   {{#if ride.seats_left}}
   {{#unless ride.isOwner}}
   {{#unless ride.isPassenger}}
@@ -143,7 +150,8 @@
     <input type='button' value='Edit Ride' class='editRideButton' data-id='{{ride.id}}'>
     <input type='button' value='Delete Ride' class='deleteRideButton' data-id='{{ride.id}}'>
   {{/if}}
-</div>
+</div>  
+
 {{/each}}
 
 </script>
@@ -152,17 +160,17 @@
 <form id="editRideForm" data-id="{{id}}">
     <h2>Edit Ride</h2>
     <h3>Destination</h3>
-    <input type="text" class="Address" id="destinationAddress" name="daddress" value="{{destination.address}}">
+    <input type="text" class="Address" id="editDestinationAddress" name="daddress" value="{{destination.address}}">
     <label for="destinationLat">Latitude:</label>
-    <input type="text" class="latLng" id="lat" name="dlat" value="{{destination.lat}}">
+    <input type="text" class="latLng" id="editDestinationLat" name="dlat" value="{{destination.lat}}">
     <label for="destinationLat">Longitude:</label>
-    <input type="text" class="latLng" id="lng" name="dlng" value="{{destination.lng}}">
+    <input type="text" class="latLng" id="editDestinationLng" name="dlng" value="{{destination.lng}}">
     <h3>Start From:</h3>
-    <input type="text" class="Address" id="startAddress" name="saddress" value="{{start_point.address}}">
+    <input type="text" class="Address" id="editStartAddress" name="saddress" value="{{start_point.address}}">
     <label for="startLat">Latitude:</label>
-    <input type="text" class="latLng" id="startLat" name="slat" value="{{start_point.lat}}">
+    <input type="text" class="latLng" id="editStartLat" name="slat" value="{{start_point.lat}}">
     <label for="startLat">Longitude:</label>
-    <input type="text" class="latLng"  id="startLng" name="slng" value="{{start_point.lng}}">
+    <input type="text" class="latLng"  id="editStartLng" name="slng" value="{{start_point.lng}}">
     <label for="length">Length of Trip:</label>
     <input type="text" name="length" placeholder="3 hours" value="{{length}}">
     <input type="text" name="departure_date_time" placeholder="MM/DD/YYYY 2:00pm" value="{{departure_date_time}}">

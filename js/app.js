@@ -43,6 +43,14 @@ var setLocationClickHandlers = function(locations, map){
     var ride = rides.findById(id);
 
     rideDiv.on('click',function() {
+      // store that this div was clicked, remove clicks from other rides
+      rides.rides.forEach(function(ride){
+        var id = ride.id;
+        rideWindowDataStorage[id].rideClicked = false; 
+      });
+      rideWindowDataStorage[ride.id].rideClicked = true;
+
+
       // clear any previous rideLine from the map
       if(rideLine){
         map.removeLayer(rideLine);
@@ -160,6 +168,36 @@ $(document).ready(function(){
     rsapi.editRide(rideData, rideId, cb);
   });
 
+  $("#sendToDestination").on('click', function(){
+    // get address info from output box
+    address = $('#foundAddress').text();
+    lat = $('#foundLat').text();
+    lng = $('#foundLng').text();
+    // send to new ride form
+    $("#newDestinationAddress").val(address);
+    $("#newDestinationLng").val(lng);
+    $("#newDestinationLat").val(lat);
+    // send to edit ride form
+    $("#editDestinationAddress").val(address);
+    $("#editDestinationLng").val(lng);
+    $("#editDestinationLat").val(lat);
+  });
+
+  $("#sendToStart").on('click', function(){
+    // get address info from output box
+    address = $('#foundAddress').text();
+    lat = $('#foundLat').text();
+    lng = $('#foundLng').text();
+    // send to new ride form
+    $("#newStartAddress").val(address);
+    $("#newStartLng").val(lng);
+    $("#newStartLat").val(lat);
+    // send to edit ride form
+    $("#editStartAddress").val(address);
+    $("#editStartLng").val(lng);
+    $("#editStartLat").val(lat);
+  });
+
   // sets click handler for delete rides button
   $("#ridesListHere").on('click', ".deleteRideButton",function(e){
     e.preventDefault();
@@ -207,11 +245,14 @@ $(document).ready(function(){
     rsapi.leaveRide(rideId, cb);
   });
 
+ // click handler for More button
   $("#ridesListHere").on('click', ".showMoreButton", function(){
+    // stores whether or not it has been clicked
     var id = this.dataset.id;
     var storage = rideWindowDataStorage[id];
 
     storage.moreClicked? storage.moreClicked = false : storage.moreClicked = true;
+    // toggles hidden property of the div
     $("#more" + id).toggleClass('hidden');
   });
   
@@ -231,10 +272,10 @@ $(document).ready(function(){
     result = res.results.features[0];
     //defines which results are displated and how
     $("#output").html("<p id='foundAddress'>"+ result.place_name + 
-      "</p><p id='foundLat'>Latitude: " +
-      result.geometry.coordinates[1] +
-      "</p><p id='foundLng'>Longitude: " + 
-      result.geometry.coordinates[0]);
+      "</p><p >Latitude: " +
+      "<span id='foundLat'>" + result.geometry.coordinates[1] +
+      "</span></p><p >Longitude: <span id='foundLng'>" + 
+      result.geometry.coordinates[0] + "</span></p>");
     
     
     $('#sendToDestination').show();
@@ -267,19 +308,18 @@ $(document).ready(function(){
       $(document).ready(function(){
         // restores data from last refresh
         // initializes data store for new rides
-      rides.rides.forEach(function(ride){
-        id = ride.id;
-       
-        if (rideWindowDataStorage[id]){
-          if (rideWindowDataStorage[id].moreClicked){
-            
-            $("#more" + id).toggleClass('hidden');
+        rides.rides.forEach(function(ride){
+          id = ride.id;
+         
+          if (rideWindowDataStorage[id]){
+            if (rideWindowDataStorage[id].moreClicked){
+              $("#more" + id).toggleClass('hidden');
+              $("#ride" + id).click();
+            }
+          } else {
+            initRideWindowData(id);
           }
-        } else {
-          initRideWindowData(id);
-        }
-      });
-
+        });
       });
     }
   };
