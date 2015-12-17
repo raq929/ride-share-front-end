@@ -1,7 +1,7 @@
 var rsapi = {
 
-  //rs: 'https://mighty-shelf-9974.herokuapp.com',
-  rs: 'http://localhost:3000',
+  rs: 'https://glacial-atoll-7078.herokuapp.com',
+  //rs: 'http://localhost:3000',
 
   ajax: function(config, cb) {
     $.ajax(config).done(function(data, textStatus, jqxhr) {
