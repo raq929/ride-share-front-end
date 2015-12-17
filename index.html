@@ -6,6 +6,8 @@
   <title>RideShare</title>
   <link rel="stylesheet" href="./css/setup.css">
   <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/animate.css">
+  <link href='https://fonts.googleapis.com/css?family=Signika:400,700|Knewave|Arvo:400,700italic' rel='stylesheet' type='text/css'>
   <script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,6 +15,7 @@
 <body>
   <header class='row'>
     <nav>
+    <h1><span class="word1 animated slideInLeft">Ride</span><span class="word2 animated slideInRight">Share</span></h1>
       <ul>
         <li>
           <label id="loginLabel" for='loginCheckbox'>Login</label>
@@ -69,7 +72,6 @@
             <label for="newLength">Length of Trip:</label>
             <input type="text" name="newLength" placeholder="3 hours">
             <label for="departureDateTime">Departure Date / Time</label>
-            input
             <input type="text" name="departure_date_time" placeholder="MM/DD/YYYY 2:00pm">
             <label for="event">Event:</label>
             <input type="text" name="event" placeholder="National Square Dance Convention">
@@ -112,12 +114,12 @@
   {{#if ride.edited}}
   <div id='more{{ride.id}}'class='hidden'>
     <ul>
-      <li><h4>Seats Available:</h4> {{ride.seats_left}}</li>
+      <li><span class ="title">Seats Available:</span>{{ride.seats_left}}</li>
       {{#if ride.event}}<li>Event: {{ride.event}}</li>{{/if}}
-      <li><h4>Driver:</h4> {{ride.owner.email}}</li>
+      <li><span class ="title">Driver:</span> {{ride.owner.email}}</li>
       <li>
       {{#if ride.passengers}}
-        <h4>Passengers: </h4>
+        <span class ="title">Passengers:</span>
          {{#if ride.isOwner}}
          <ul>
             {{#each passengers as |passenger|}}
@@ -134,7 +136,7 @@
 </div> 
 <div class ="buttons"> 
   <input type='button' value='More' class='showMoreButton myButton' data-id='{{ride.id}}'>
-  {{/if}}
+
   {{#if ride.seats_left}}
   {{#unless ride.isOwner}}
   {{#unless ride.isPassenger}}
@@ -149,7 +151,14 @@
     <input type='button' value='Edit Ride' class='editRideButton myButton' data-id='{{ride.id}}'>
     <input type='button' value='Delete Ride' class='deleteRideButton myButton' data-id='{{ride.id}}'>
   {{/if}}
-</div>  
+  </div>
+</div>   
+{{else}}
+</div> 
+<div class="buttons"></div> 
+{{/if}}
+
+
 
 {{/each}}
 
@@ -179,8 +188,10 @@
     <br/>
     <label for="seats">Seats available:</label>
     <input type="text" name="seats_left" value="{{seats_left}}">
-    <input type="submit" class="myButton" data-id="{{id}}" value="Edit Ride">
-     <input type="button" class="myButton" id="cancelEditRide" value="Cancel">
+    <div class="buttons">
+      <input type="submit" class="myButton" data-id="{{id}}" value="Edit Ride">
+      <input type="button" class="myButton" id="cancelEditRide" value="Cancel">
+    </div>
   </form>
 </script>
 
