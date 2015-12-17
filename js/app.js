@@ -66,12 +66,6 @@ var setLocationClickHandlers = function(locations, map){
       if(rideLine){
         map.removeLayer(rideLine);
       }
-      
-      var startLatLng = [parseFloat(ride.start_point.lng), parseFloat(ride.start_point.lat)];
-      var destinationLatLng =  [locale._latlng.lng, locale._latlng.lat];
-
-      //zoom to a point midway bewteen the start and destination
-      // map.setView([(startLatLng[1] + destinationLatLng[1])/2,(startLatLng[0]+ destinationLatLng[0])/2], 6);
 
       rideLine = L.mapbox.featureLayer().addTo(map);
       // adds start point and line to the map
