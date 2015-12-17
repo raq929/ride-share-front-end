@@ -25,9 +25,9 @@ header {
   top: 0;
   left: 0;
   width:100%;
-  background-color: rgba(98, 119, 102, 1);
+  background-color: #6A94D4;
   height: 60px;
-  border-bottom: 1px solid #878d8f;
+  border-bottom: 1px solid #604BD8;
 }
 
 
@@ -47,7 +47,8 @@ nav label {
 }
 
 nav label:hover {
-  background: #d2ccfc;
+  background: #437DD4;
+  color:#05306D;
 }
 
 #logout {
@@ -74,7 +75,7 @@ form input {
 
 .hiddenCheckbox ~ div {
   max-height: 0;
-  background: slategrey;
+  background: #FFE373;
   overflow: hidden;
   margin-top: 8px;
   transition: max-height 1s;
@@ -117,7 +118,7 @@ aside {
 }
 
 .sidebar {
-  background-color: #d2ccfc;
+  background-color: #FFCB73;
   overflow:hidden;
   border-right:1px solid rgba(0,0,0,0.25);
 }
@@ -130,7 +131,7 @@ aside {
 /* Ride styling */
 
 .ride:hover {
-  background-color: cornflowerblue;
+  background-color: #FFA100;
 }
 
 .hidden {
@@ -157,7 +158,7 @@ aside {
   background:none;
 }
 ::-webkit-scrollbar-thumb {
-  background:#00853e;
+  background:#FFA100;
   border-radius:0;
 }
 
@@ -173,16 +174,12 @@ aside {
 .rides .ride:last-child { border-bottom:none; }
 .rides .ride .title {
   display:block;
-  color:#00853e;
+  color:#180773;
   font-weight:700;
 }
 
 .rides .ride .title small { font-weight:400; }
-.rides .ride.active .title,
-.rides .ride .title:hover { color:#8cc63f; }
-.rides .ride.active {
-  background-color:#f8f8f8;
-}
+
 
 
 /* Map styles */
