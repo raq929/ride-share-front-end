@@ -26,6 +26,17 @@ var rsHelpers = {
       };
     }
     return data;
+  },
+
+  clearForms: function(){
+    // clear new ride form
+    $("#newStartAddress").val("");
+    $("#newStartLng").val("");
+    $("#newStartLat").val("");
+    // clear edit ride form
+    $("#editStartAddress").val("");
+    $("#editStartLng").val("");
+    $("#editStartLat").val("");
   }
 };
 
@@ -60,9 +71,9 @@ var setLocationClickHandlers = function(locations, map){
       var destinationLatLng =  [locale._latlng.lng, locale._latlng.lat];
 
       //zoom to a point midway bewteen the start and destination
-      map.setView([(startLatLng[1] + destinationLatLng[1])/2,(startLatLng[0]+ destinationLatLng[0])/2], 6);
+      // map.setView([(startLatLng[1] + destinationLatLng[1])/2,(startLatLng[0]+ destinationLatLng[0])/2], 6);
 
-      var featureLayer = L.mapbox.featureLayer().addTo(map);
+      rideLine = L.mapbox.featureLayer().addTo(map);
       // adds start point and line to the map
       var geojson = [
         {
@@ -91,8 +102,8 @@ var setLocationClickHandlers = function(locations, map){
         }
       ];
       // assigns start point and line to a variable so they can be accessed later
-      rideLine = featureLayer.setGeoJSON(geojson);
-
+      rideLine.setGeoJSON(geojson);
+      map.fitBounds(rideLine.getBounds());
       
       locale.on('click', function(e) {
 
@@ -335,20 +346,20 @@ $(document).ready(function(){
       var cb = function (error, data) {
         if (error){
           console.log(error);
+        } else {
+          //hide login form and label
+          $("#loginCheckbox").trigger('click');
+          $("#loginLabel").css({display: 'none'});
+      
+          // display logout and new ride button
+          $('#logout').css({display: 'inline'});
+          $('#newRideButton').show();
+          //get rides
+          rsapi.getRides(ridesCallback);
+          
+          user = new User(data.user.id, data.user.token);
         }
-        //hide login form and label
-        $("#loginCheckbox").trigger('click');
-        $("#loginLabel").css({display: 'none'});
-    
-        // display logout and new ride button
-        $('#logout').css({display: 'inline'});
-        $('#newRideButton').show();
-        //get rides
-        rsapi.getRides(ridesCallback);
-        
-        user = new User(data.user.id, data.user.token);
       };
-
       rsapi.login(credentials, cb);
     });
 
@@ -376,6 +387,8 @@ $(document).ready(function(){
           user = null;
         $('#logout').css({display: 'none'});
         $("#loginLabel").css({display: 'inline'});
+        rsHelpers.clearForms();
+        rsapi.getRides(ridesCallback);
         }
       };
       rsapi.logout(cb);
