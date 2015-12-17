@@ -1,21 +1,55 @@
 h2 {
   font-size: 1.25em;
+  color: #180773;
+  font-weight: 800;
 }
 
 
 /* Button Styles */
-.fancyButton {
-  background-image: linear-gradient(#fff, #8a80c3);
-  display: inline-block;
-  margin-top: 15px;
-  padding: 10px;
-  border-radius: 8px;
-  text-transform: uppercase;
-  transition: background-image 2s;
+
+.myButton {
+  -moz-box-shadow: 0px 0px 0px 2px #9fb4f2;
+  -webkit-box-shadow: 0px 0px 0px 2px #9fb4f2;
+  box-shadow: 0px 0px 0px 2px #9fb4f2;
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #567dbf), color-stop(1, #31629e));
+  background:-moz-linear-gradient(top, #567dbf 5%, #31629e 100%);
+  background:-webkit-linear-gradient(top, #567dbf 5%, #31629e 100%);
+  background:-o-linear-gradient(top, #567dbf 5%, #31629e 100%);
+  background:-ms-linear-gradient(top, #567dbf 5%, #31629e 100%);
+  background:linear-gradient(to bottom, #567dbf 5%, #31629e 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#567dbf', endColorstr='#31629e',GradientType=0);
+  background-color:#567dbf;
+  -moz-border-radius:10px;
+  -webkit-border-radius:10px;
+  border-radius:10px;
+  border:1px solid #4e6096;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-family:Arial;
+  font-size:1em;
+  padding: .5em 1.1em;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #172f6b;
+  margin: 5px 0; 
+}
+.myButton:hover {
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #31629e), color-stop(1, #567dbf));
+  background:-moz-linear-gradient(top, #31629e 5%, #567dbf 100%);
+  background:-webkit-linear-gradient(top, #31629e 5%, #567dbf 100%);
+  background:-o-linear-gradient(top, #31629e 5%, #567dbf 100%);
+  background:-ms-linear-gradient(top, #31629e 5%, #567dbf 100%);
+  background:linear-gradient(to bottom, #31629e 5%, #567dbf 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#31629e', endColorstr='#567dbf',GradientType=0);
+  background-color:#31629e;
+}
+.myButton:active {
+  position:relative;
+  top:1px;
 }
 
-.fancybutton:hover {
-  background-image: linear-gradient(#8a80c3, #fff);
+.ui-output > .myButton {
+  padding: .3em .8em;
 }
 
 
@@ -54,6 +88,7 @@ nav label:hover {
 #logout {
   display: none;
 }
+/*Form styles*/
 
 form {
   margin: 10px;
@@ -61,10 +96,13 @@ form {
 }
 
 form input {
-  font-size: 1.25em;
+  font-size: 1.15em;
   margin-bottom: 10px;
 }
 
+label {
+  vertical-align: top;
+}
 
 
 /*Toggle login */
@@ -89,11 +127,14 @@ form input {
 }
 
 .dropdown {
-  width: 400px;
+  width: 250px;
   border-radius: 5px;
   position: fixed;
   top: 61px;
   z-index:900;
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    3px 3px 5px 0px rgba(50, 50, 50, 0.75);
+  box-shadow:         3px 3px 5px 0px rgba(50, 50, 50, 0.75);
 } 
 
 #loginDropdown {
@@ -193,7 +234,7 @@ aside {
   border-radius: 5px;
 }
 .leaflet-popup-content h3 {
-  background:#91c949;
+  background:#180773;
   color:#fff;
   margin:0;
   display:block;
@@ -212,22 +253,7 @@ aside {
 .leaflet-popup-close-button {
   display:none;
 }
-.leaflet-popup-content {
-  font:400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
-  padding:0;
-  width:200px;
-}
 
-.leaflet-popup-content h3 {
-  background:#91c949;
-  color:#fff;
-  margin:0;
-  display:block;
-  padding:10px;
-  border-radius:3px 3px 0 0;
-  font-weight:700;
-  margin-top:-15px;
-}
 .leaflet-popup-content div {
   padding:10px;
 }
@@ -265,11 +291,7 @@ body {
   font:400 15px/22px 'Helvetica Neue', Sans-serif;
   -webkit-font-smoothing:antialiased;
 }
-* {
-  -webkit-box-sizing:border-box;
-  -moz-box-sizing:border-box;
-  box-sizing:border-box;
-}
+
 h1 {
   font-size:22px;
   margin:0;
