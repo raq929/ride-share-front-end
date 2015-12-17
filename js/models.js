@@ -127,8 +127,9 @@ Rides.prototype.getDestinationGeoJSON = function(){
     },
     "properties": {
       "marker-color": "#0A42DD",
-      "address": ride.destination.address,
-      "id": ride.id
+      "daddress": ride.destination.address,
+      "id": ride.id,
+      "saddress": ride.start_point.address
     }
 
 
