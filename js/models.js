@@ -88,6 +88,7 @@ Rides.prototype.setProperties = function(){
       } else {
         ride.isOwner = false;
       } 
+      ride.edited = true;
     });
   }  
 };
