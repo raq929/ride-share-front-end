@@ -29,7 +29,7 @@ $(document).ready(function(){
           $("#loginLabel").css({display: 'none'});
       
           // display logout and new ride button
-          $('#logout').css({display: 'inline'});
+          $('#logout').css({display: 'inline-block'});
           $('#newRideButton').show();
           //get rides
           rsapi.getRides(ridesCallback);
@@ -63,7 +63,7 @@ $(document).ready(function(){
         }  else {
           user = null;
         $('#logout').css({display: 'none'});
-        $("#loginLabel").css({display: 'inline'});
+        $("#loginLabel").css({display: 'inline-block'});
         rsHelpers.clearForms();
         rsapi.getRides(ridesCallback);
         }

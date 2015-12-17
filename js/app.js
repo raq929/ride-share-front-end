@@ -45,6 +45,7 @@ var user;
 var rides;
 var rideLine;
 var locations;
+var map;
 
 var setLocationClickHandlers = function(locations, map){
   locations.eachLayer(function(locale) {
@@ -119,42 +120,7 @@ var setLocationClickHandlers = function(locations, map){
   });  
 }; 
 
-
-
-
-$(document).ready(function(){
-
-  ridesListTemplate = Handlebars.compile($("#ridesList").html());
-  editRideFormTemplate = Handlebars.compile($("#createEditRideForm").html());
-
- // sets up mapBox 
-  L.mapbox.accessToken = 'pk.eyJ1IjoicmFxOTI5IiwiYSI6ImNpaTYxZm9mMjAxa3R0eGtxY25reW12cXAifQ.g49YwXKsFMU2bcQDQdfaDw';
-  // tells mapbox which tiles to use
-  var map = L.mapbox.map('map', 'mapbox.streets');
-  //sets the initial coordinates and zoom
-  map.setView([42.3601,-71.0589], 7);
-  // adds the geocoder 
-  var geocoderControl = L.mapbox.geocoderControl('mapbox.places', {
-        autocomplete: true
-    });
-  geocoderControl.addTo(map);
-  //pipes geocoder results to an output window
-  geocoderControl.on('found', function(res) {
-    result = res.results.features[0];
-    //defines which results are displated and how
-    $("#output").html("<p id='foundAddress'>"+ result.place_name + 
-      "</p><p >Latitude: " +
-      "<span id='foundLat'>" + result.geometry.coordinates[1] +
-      "</span></p><p >Longitude: <span id='foundLng'>" + 
-      result.geometry.coordinates[0] + "</span></p>");
-    
-    
-    $('#sendToDestination').show();
-    $('#sendToStart').show();
-  });
-
-
-  //makes initial call to /rides
+//makes initial call to /rides
   var ridesCallback = function (error, data) {
     if (error){
       console.log(error);
@@ -194,6 +160,43 @@ $(document).ready(function(){
       });
     }
   };
+
+
+
+
+$(document).ready(function(){
+
+  ridesListTemplate = Handlebars.compile($("#ridesList").html());
+  editRideFormTemplate = Handlebars.compile($("#createEditRideForm").html());
+
+ // sets up mapBox 
+  L.mapbox.accessToken = 'pk.eyJ1IjoicmFxOTI5IiwiYSI6ImNpaTYxZm9mMjAxa3R0eGtxY25reW12cXAifQ.g49YwXKsFMU2bcQDQdfaDw';
+  // tells mapbox which tiles to use
+  map = L.mapbox.map('map', 'mapbox.streets');
+  //sets the initial coordinates and zoom
+  map.setView([42.3601,-71.0589], 7);
+  // adds the geocoder 
+  var geocoderControl = L.mapbox.geocoderControl('mapbox.places', {
+        autocomplete: true
+    });
+  geocoderControl.addTo(map);
+  //pipes geocoder results to an output window
+  geocoderControl.on('found', function(res) {
+    result = res.results.features[0];
+    //defines which results are displated and how
+    $("#output").html("<p id='foundAddress'>"+ result.place_name + 
+      "</p><p >Latitude: " +
+      "<span id='foundLat'>" + result.geometry.coordinates[1] +
+      "</span></p><p >Longitude: <span id='foundLng'>" + 
+      result.geometry.coordinates[0] + "</span></p>");
+    
+    
+    $('#sendToDestination').show();
+    $('#sendToStart').show();
+  });
+
+
+  
   // initial get rides request
   rsapi.getRides(ridesCallback);
   // set a timer to refresh rides list continuously
