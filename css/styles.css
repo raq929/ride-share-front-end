@@ -32,7 +32,7 @@ header {
 
 
 nav {
-  float:left;
+  float:right;
 }
 
 nav li {
@@ -41,7 +41,8 @@ nav li {
 
 nav label {
   display: inline-block;
-  padding: 26px 10px;
+  text-align: right;
+  padding: 19px 10px;
   transition: background 2s;
 }
 
@@ -54,24 +55,18 @@ nav label:hover {
 }
 
 form {
-  
   margin: 10px;
   padding: 10px;
-  
 }
 
 form input {
-  font-size: 1.5em;
-  margin-bottom: 15px;
+  font-size: 1.25em;
+  margin-bottom: 10px;
 }
 
 
 
 /*Toggle login */
-nav label {
-    text-align: right;
-    padding: 22px 10px;
-}
 
 .hiddenCheckbox {
   display:none;
@@ -81,10 +76,11 @@ nav label {
   max-height: 0;
   background: slategrey;
   overflow: hidden;
+  margin-top: 8px;
   transition: max-height 1s;
 /*  position: absolute;*/
-  top:68px;
-  left: 0;
+  top:60px;
+  right: 0;
 }
 
 .hiddenCheckbox:checked ~ div {
@@ -95,10 +91,17 @@ nav label {
   width: 400px;
   border-radius: 5px;
   position: fixed;
-  right: 0;
   top: 61px;
   z-index:900;
 } 
+
+#loginDropdown {
+  right: 76px;
+}
+
+#registrationDropdown {
+  right: 3px;
+}
 
 
 /* Main content*/
@@ -110,9 +113,7 @@ main {
 }
 
 aside {
- padding-top: 15px;
- padding-left: 15px;
- margin: none;
+ 
 }
 
 .sidebar {
@@ -126,10 +127,7 @@ aside {
 
 /* Ride styling */
 .ride {
-  margin-top: 12px;
-  padding: 2px;
-  width: 90%;
-  border-radius: 5px;
+ 
 }
 
 .ride:hover {
@@ -140,6 +138,51 @@ aside {
   display: none;
 }
 
+.rides {
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 10px;
+  margin: none;
+  overflow:auto;
+  padding-bottom:60px;
+}
+
+.rides .ride {
+  margin-top: 12px;
+  border-radius: 5px;
+  display:block;
+  border-bottom:1px solid #eee;
+  padding:10px;
+}
+
+.rides .ride:last-child { border-bottom:none; }
+.rides .ride .title {
+  display:block;
+  color:#00853e;
+  font-weight:700;
+}
+
+.rides .ride .title small { font-weight:400; }
+.rides .ride.active .title,
+.rides .ride .title:hover { color:#8cc63f; }
+.rides .ride.active {
+  background-color:#f8f8f8;
+}
+
+::-webkit-scrollbar {
+  width:3px;
+  height:3px;
+  border-left:0;
+  background:rgba(0,0,0,0.1);
+}
+::-webkit-scrollbar-track {
+  background:none;
+}
+::-webkit-scrollbar-thumb {
+  background:#00853e;
+  border-radius:0;
+}
+
 /* Map styles */
 .leaflet-popup-content {
   font:400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
@@ -148,7 +191,34 @@ aside {
 }
 .leaflet-popup-content-wrapper {
   padding:0;
+  border-radius: 5px;
 }
+.leaflet-popup-content h3 {
+  background:#91c949;
+  color:#fff;
+  margin:0;
+  display:block;
+  padding:10px;
+  border-radius:3px 3px 0 0;
+  font-weight:700;
+  margin-top:-15px;
+}
+
+.leaflet-container .leaflet-marker-icon { 
+  cursor:pointer;
+  border-radius: 5px;
+}
+
+/* Marker tweaks */
+.leaflet-popup-close-button {
+  display:none;
+}
+.leaflet-popup-content {
+  font:400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+  padding:0;
+  width:200px;
+}
+
 .leaflet-popup-content h3 {
   background:#91c949;
   color:#fff;
@@ -164,6 +234,7 @@ aside {
 }
 .leaflet-container .leaflet-marker-icon { cursor:pointer; }
 
+
 /*Geocoding results box*/
 pre.ui-output {
     display:block;
@@ -171,7 +242,7 @@ pre.ui-output {
     top:250px;
     left:10px;
     padding:5px 10px;
-    background:rgba(0,0,0,0.5);
+    background:rgba(0,0,0, 0.5);
     color:#fff;
     line-height:1.2em;
     border-radius:3px;
@@ -181,7 +252,52 @@ pre.ui-output {
     word-wrap: break-word;
     white-space:pre-wrap;
     z-index: 50;
+    cursor:pointer;
     }
 pre.ui-output:empty { padding:0; }
+
+pre p {
+  cursor:text;
+}
+
+
+body {
+  color:#404040;
+  font:400 15px/22px 'Helvetica Neue', Sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+* {
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+}
+h1 {
+  font-size:22px;
+  margin:0;
+  font-weight:400;
+}
+a {
+  color:#404040;
+  text-decoration:none;
+}
+a:hover { color:#101010; }
+
+.sidebar {
+  overflow:hidden;
+  border-right:1px solid rgba(0,0,0,0.25);
+}
+
+.quiet {
+  color:#888;
+}
+
+.heading {
+  background:#fff;
+  border-bottom:1px solid #eee;
+  height:60px;
+  line-height:60px;
+  padding:0 10px;
+}
+
 
 
