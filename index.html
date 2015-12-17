@@ -115,7 +115,7 @@
   <div id='more{{ride.id}}'class='hidden'>
     <ul>
       <li><span class ="title">Seats Available:</span>{{ride.seats_left}}</li>
-      {{#if ride.event}}<li>Event: {{ride.event}}</li>{{/if}}
+      {{#if ride.event}}<li><span class ="title">Event: </span>{{ride.event}}</li>{{/if}}
       <li><span class ="title">Driver:</span> {{ride.owner.email}}</li>
       <li>
       {{#if ride.passengers}}
