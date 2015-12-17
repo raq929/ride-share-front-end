@@ -29,7 +29,7 @@
           <label id='logout'>Logout</label>
         </li>
         <li>
-          <label for='registrationCheckbox'>Register</label>
+          <label for='registrationCheckbox' id="registrationLabel">Register</label>
           <input type='checkbox' id='registrationCheckbox' class='hiddenCheckbox'>
           <div id='registrationDropdown' class='dropdown'>
             <form id="registrationForm" accept-charset="UTF-8">
@@ -46,55 +46,53 @@
 
   <main class='row'>
   
-  <div id='map' class='map column span_9_of_12'>
- 
-  
-  <pre class='ui-output hidden'>
-    <div id='output' >
-    </div>
-    <input type='button' id='sendToDestination' value='Send to Destination'> 
-    <input type='button' id='sendToStart' value='Send to Starting Address'>
-  </pre>
-  <div id="message"></div>
-  </div>
-  <aside class='column span_3_of_12 sidebar'>
-    <h2>Rides</h2>
-   
-      <input type="button" id="newRideButton" class="hidden" value="New Ride">
-      <div> 
-        <form id="createRideForm" class="hidden">
-          <h2>New Ride</h2>
-          <h3>Destination</h3>
-          <input type="text" class="Address" id="newDestinationAddress" name="daddress" placeholder="Destination address">
-          <label for="newDestinationLat">Latitude:</label>
-          <input type="text" class="latLng" id="newDestinationLat" name="dlat" placeholder="Lat">
-          <label for="newDestinationLng">Longitude:</label>
-          <input type="text" class="latLng" id="newDestinationLng" name="dlng" placeholder="Lng">
-          <label for:"newStartAddress">Start From:</label>
-          <input type="text" class="Address" id="newStartAddress" name="saddress" placeholder="Starting address">
-          <label for="newStartLat">Latitude:</label>
-          <input type="text" class="latLng" id="newStartLat" name="slat" placeholder="lat">
-          <label for="newStartLng">Longitude:</label>
-          <input type="text" class="latLng"  id="newStartLng" name="slng" placeholder="Lng">
-          <label for="newLength">Length of Trip:</label>
-          <input type="text" name="newLength" placeholder="3 hours">
-          <<label for="departureDateTime">Departure Date / Time</label>
-          input
-          <input type="text" name="departure_date_time" placeholder="MM/DD/YYYY 2:00pm">
-          <label for="event">Event:</label>
-          <input type="text" name="event" placeholder="National Square Dance Convention">
-          <label for="seats">Seats available:</label>
-          <input type="text" name="spots_available" placeholder="3">
-          <input type="submit" id="submitRideButton" value="Create Ride">
-        </form>
-      </div>
-      <div id="editRideFormGoesHere">
-      </div>
-      <div id="ridesListHere">
-      </div>
+    <aside class='column span_3_of_12 sidebar rides'>
+      <h2>Rides</h2>
+     
+        <input type="button" id="newRideButton" class="hidden" value="New Ride">
+        <div> 
+          <form id="createRideForm" class="hidden">
+            <h2>New Ride</h2>
+            <h3>Destination</h3>
+            <input type="text" class="Address" id="newDestinationAddress" name="daddress" placeholder="Destination address">
+            <label for="newDestinationLat">Latitude:</label>
+            <input type="text" class="latLng" id="newDestinationLat" name="dlat" placeholder="Lat">
+            <label for="newDestinationLng">Longitude:</label>
+            <input type="text" class="latLng" id="newDestinationLng" name="dlng" placeholder="Lng">
+            <label for:"newStartAddress">Start From:</label>
+            <input type="text" class="Address" id="newStartAddress" name="saddress" placeholder="Starting address">
+            <label for="newStartLat">Latitude:</label>
+            <input type="text" class="latLng" id="newStartLat" name="slat" placeholder="lat">
+            <label for="newStartLng">Longitude:</label>
+            <input type="text" class="latLng"  id="newStartLng" name="slng" placeholder="Lng">
+            <label for="newLength">Length of Trip:</label>
+            <input type="text" name="newLength" placeholder="3 hours">
+            <label for="departureDateTime">Departure Date / Time</label>
+            input
+            <input type="text" name="departure_date_time" placeholder="MM/DD/YYYY 2:00pm">
+            <label for="event">Event:</label>
+            <input type="text" name="event" placeholder="National Square Dance Convention">
+            <label for="seats">Seats available:</label>
+            <input type="text" name="spots_available" placeholder="3">
+            <input type="submit" id="submitRideButton" value="Create Ride">
+            <input type="button" id="cancelNewRide" value="Cancel">
+          </form>
+        </div>
+        <div id="editRideFormGoesHere">
+        </div>
+        <div id="ridesListHere">
+        </div>
 
-  </aside>
+    </aside>
   
+
+    <div id='map' class='map column span_9_of_12'> 
+    <pre class='ui-output hidden'>
+      <div id='output' >
+      </div>
+      <input type='button' id='sendToDestination' value='Send to Destination'> 
+      <input type='button' id='sendToStart' value='Send to Starting Address'>
+    </pre>
   </main>
  
 
@@ -106,19 +104,19 @@
 {{#each rides as |ride|}}
 <div class="ride" id="ride{{ride.id}}">
   <ul>
-    <li>Going to: {{ride.destination.address}}</li>
-    <li>From: {{ride.start_point.address}}</li>
-    <li>Date: {{ride.departure_date_time}}</li>
+    <li><span class ="title">Going to: </span>{{ride.destination.address}}</li>
+    <li><span class ="title">From: </span>{{ride.start_point.address}}</li>
+    <li><span class ="title">Date: </span>{{ride.departure_date_time}}</li>
   </ul>
   {{#if ride.edited}}
   <div id='more{{ride.id}}'class='hidden'>
     <ul>
-      <li>Seats Available: {{ride.seats_left}}</li>
+      <li><h4>Seats Available:</h4> {{ride.seats_left}}</li>
       {{#if ride.event}}<li>Event: {{ride.event}}</li>{{/if}}
-      <li>Driver: {{ride.owner.email}}</li>
+      <li><h4>Driver:</h4> {{ride.owner.email}}</li>
       <li>
       {{#if ride.passengers}}
-        Passengers: 
+        <h4>Passengers: </h4>
          {{#if ride.isOwner}}
          <ul>
             {{#each passengers as |passenger|}}
@@ -156,7 +154,7 @@
 
 </script>
 
-<script id="editRideForm" type="text/x-handlebars-template">
+<script id="createEditRideForm" type="text/x-handlebars-template">
 <form id="editRideForm" data-id="{{id}}">
     <h2>Edit Ride</h2>
     <h3>Destination</h3>
@@ -181,6 +179,7 @@
     <label for="seats">Seats available:</label>
     <input type="text" name="seats_left" value="{{seats_left}}">
     <input type="submit" data-id="{{id}}" value="Edit Ride">
+     <input type="button" id="cancelEditRide" value="Cancel">
   </form>
 </script>
 
