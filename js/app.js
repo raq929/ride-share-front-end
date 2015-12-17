@@ -101,14 +101,19 @@ var setLocationClickHandlers = function(locations, map){
       // assigns start point and line to a variable so they can be accessed later
       rideLine.setGeoJSON(geojson);
       map.fitBounds(rideLine.getBounds());
-      
-      locale.on('click', function(e) {
 
-        // 1. center the map on the selected marker.
-        map.panTo(locale.getLatLng()); 
-       
+    });
+    // set info in popup 
+    var popup = '<h3>Destination</h3><div>' + prop.daddress;
+    locale.bindPopup(popup);
+    
+    locale.on('click', function(e) {
 
-      });
+      // 1. center the map on the selected marker.
+      map.setView(locale.getLatLng(), 16);
+      locale.openPopup();
+      return false;
+
     });
   });  
 }; 
@@ -119,7 +124,7 @@ var setLocationClickHandlers = function(locations, map){
 $(document).ready(function(){
 
   ridesListTemplate = Handlebars.compile($("#ridesList").html());
-  editRideFormTemplate = Handlebars.compile($("#editRideForm").html());
+  editRideFormTemplate = Handlebars.compile($("#createEditRideForm").html());
 
  // sets up mapBox 
   L.mapbox.accessToken = 'pk.eyJ1IjoicmFxOTI5IiwiYSI6ImNpaTYxZm9mMjAxa3R0eGtxY25reW12cXAifQ.g49YwXKsFMU2bcQDQdfaDw';
@@ -156,7 +161,7 @@ $(document).ready(function(){
       rides = new Rides(data.rides);
       //get destinations for map
       destinations = rides.getDestinations();
-      // sets additional properties on each ride
+      // sets additional user-dependent properties on each ride
       // isOwner, isPassnger, seats_left, numberOfPassengers
       rides.setProperties();
       
@@ -188,8 +193,10 @@ $(document).ready(function(){
       });
     }
   };
-
+  // initial get rides request
   rsapi.getRides(ridesCallback);
+  // set a timer to refresh rides list continuously
+  var getRidesInterval = setInterval(rsapi.getRides(ridesCallback), 5000);
 
   // CLICK HANDLERS
   // Shows Create Ride form
@@ -277,6 +284,17 @@ $(document).ready(function(){
     $("#editStartLat").val(lat);
   });
 
+  // sets click handler to cancel creating or editing a ride
+  $("#cancelNewRide").on('click', function(){
+    rsHelpers.clearForms();
+    $("#createRideForm").hide();
+  });
+
+  $("#editRideFormGoesHere").on('click', "#cancelEditRide",function(){
+    rsHelpers.clearForms();
+    $('#editRideFormGoesHere').html("");
+  });
+
   // sets click handler for delete rides button
   $("#ridesListHere").on('click', ".deleteRideButton",function(e){
     e.preventDefault();
@@ -335,6 +353,21 @@ $(document).ready(function(){
     $("#more" + id).toggleClass('hidden');
   });
   
+  // hide registration form when login is clicked
+  // and vice versa
+  $("#loginLabel").on('click', function(){
+    if ($("#registrationCheckbox").prop('checked') && 
+      !$("#loginCheckbox").prop( "checked" )){
+     $("#registrationCheckbox").prop('checked', false);
+    }
+  });
+
+   $("#registrationLabel").on('click', function(){
+    if (!$("#registrationCheckbox").prop('checked') && 
+      $("#loginCheckbox").prop( "checked" )){
+     $("#loginCheckbox").prop('checked', false);
+    }
+  });
  
   // login form click handler
   $('#loginForm').on('submit', function(e){
