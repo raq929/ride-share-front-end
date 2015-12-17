@@ -368,7 +368,6 @@ $(document).ready(function(){
     });  
      
    $('#logout').click(function(){
-       alert("You clicked!");
       var cb = function(error, data){
         if (error) {
           $('#message').val('status: ' + error.status + ', error: ' +error.error);
