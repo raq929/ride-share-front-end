@@ -186,7 +186,7 @@ aside {
   margin: none;
   overflow:scroll;
   padding-bottom:60px;
-  height: 100vh;
+  height: 93vh;
 }
 
 ::-webkit-scrollbar {
@@ -208,8 +208,12 @@ aside {
   margin-top: 12px;
   border-radius: 5px;
   display:block;
-  border-bottom:1px solid #eee;
+  
   padding:10px;
+}
+
+.rides .buttons {
+  border-bottom:1px solid #eee;
 }
 
 .rides .ride:last-child { border-bottom:none; }
