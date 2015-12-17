@@ -193,6 +193,7 @@ $(document).ready(function(){
     
     $('#sendToDestination').show();
     $('#sendToStart').show();
+    $('pre.ui-output').show();
   });
 
 

@@ -262,7 +262,6 @@ aside {
 
 /*Geocoding results box*/
 pre.ui-output {
-    display:block;
     position:absolute;
     top:250px;
     left:10px;
@@ -279,7 +278,9 @@ pre.ui-output {
     z-index: 50;
     cursor:pointer;
     }
-pre.ui-output:empty { padding:0; }
+pre.ui-output:empty { 
+  padding:0;
+  display:none; }
 
 pre p {
   cursor:text;
