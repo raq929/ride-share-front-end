@@ -117,25 +117,29 @@ Rides.prototype.setProperties = function(){
 //   }  
 
 Rides.prototype.getDestinationGeoJSON = function(){
+
   this.rides.forEach (function(ride){
-    geoJSON.features.push({
-
-    "type": "Feature",
-    "geometry": {
-      "type": "Point",
-      "coordinates": [ride.destination.lng, ride.destination.lat]
-    },
-    "properties": {
-      "marker-color": "#0A42DD",
-      "daddress": ride.destination.address,
-      "id": ride.id,
-      "saddress": ride.start_point.address
-    }
-
-
+    var inArray = geoJSON.features.some(function(gj){
+      return gj.properties.id === ride.id;
     });
-  });
 
+    if (!inArray){
+      geoJSON.features.push({
+
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [ride.destination.lng, ride.destination.lat]
+        },
+        "properties": {
+          "marker-color": "#0A42DD",
+          "daddress": ride.destination.address,
+          "id": ride.id,
+          "saddress": ride.start_point.address
+        }  
+      });
+    }   
+  });
 };
 
 
