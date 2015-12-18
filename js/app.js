@@ -156,13 +156,14 @@ var setLocationClickHandlers = function(locations, map){
         // initializes data store for new rides
         rides.rides.forEach(function(ride){
           id = ride.id;
-         
+          console.log("For each id " + id);
           if (rideWindowDataStorage[id]){
             if (rideWindowDataStorage[id].moreClicked){
               $("#more" + id).toggleClass('hidden');
               $("#ride" + id).click();
             }
           } else {
+            console.log("About to be initialized id " + id);
             initRideWindowData(id);
           }
         });

@@ -19,7 +19,7 @@ var initRideWindowData = function(rideId){
       moreClicked: false,
       rideClicked: false
     }; 
-
+   console.log("Init function ride id" + id); 
   rideWindowDataStorage[rideId] = data;
 };
 var rideWindowDataStorage = {};
