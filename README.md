@@ -4,8 +4,8 @@
 
 ##Technologies used
 
-###No straps attached (HTML5/CSS3)
-I decided not to use Bootstrap or other pre-made css for this project, and designed my own css. There were several tools that helped me a lot with this. 
+###No straps attached! (HTML5/CSS3)
+I decided not to use Bootstrap or other template for this project, and designed my own CSS. There were several tools that helped me a lot with this. 
 
 * [Button Generator](http://www.bestcssbuttongenerator.com/) 
 * [Box Shadow Generator](http://css3gen.com/box-shadow/)
@@ -26,18 +26,18 @@ I used [Mapbox](https://www.mapbox.com/) for the map functionality of this app. 
 
 
 
-###My Approach
+##My Approach
 
-####Planning
+###Planning
 I started out by creating user stories, and a wireframe for the app. I also created a plan for my database that cataloged the columns of my tables and the relationships between them. I then made a basic front-end without any styling, so that I could have an idea of how I wanted my information displayed. I also spent some time playing with MapBox as a proof of concept before I started to write a lot of code. 
 
-####Ruby on Rails
+###Ruby on Rails
 After the planning phase, I wrote my backend in Ruby on Rails.  I loved returning to Ruby for this project, and I had the opportunity to explore more complex relationships between my tables and more extensive serializers, which was a lot of fun. 
 
-####Front-end
+###Front-end
 After completing the backend, I moved on to the client side. I first did login and registration, then I wrote a handlebars template to display the rides. After that I moved on to creating, editing and deleting rides and passengers. I made a model for rides so that I could easily manipulate data based on the user, and also a model that saves the view state, so that users can join a ride without loosing their view state when the rides list refreshes. Finally, I added more styles, and added features to improve useablity. 
 
-####Planning documents
+###Planning documents
 
 
 
