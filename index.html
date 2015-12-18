@@ -6,7 +6,6 @@
   <title>RideShare</title>
   <link rel="stylesheet" href="./css/setup.css">
   <link rel="stylesheet" href="./css/styles.css">
-  <link rel="stylesheet" href="./css/animate.css">
   <link href='https://fonts.googleapis.com/css?family=Signika:400,700|Knewave|Arvo:400,700italic' rel='stylesheet' type='text/css'>
   <script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
@@ -77,8 +76,10 @@
             <input type="text" name="event" placeholder="National Square Dance Convention">
             <label for="seats">Seats available:</label>
             <input type="text" name="spots_available" placeholder="3">
-            <input type="submit" id="submitRideButton" class="myButton" value="Create Ride">
-            <input type="button" class="myButton" id="cancelNewRide" value="Cancel">
+            <div class="buttons">
+              <input type="submit" id="submitRideButton" class="myButton" value="Create Ride">
+              <input type="button" class="myButton" id="cancelNewRide" value="Cancel">
+            </div>  
           </form>
         </div>
         <div id="editRideFormGoesHere">
