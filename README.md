@@ -2,6 +2,11 @@
 
 ![screenshot](./images/screenshot.png)
 
+##Links
+* [Deployed Front End](http://raq929.github.io/ride-share-front-end/)
+* [Deployed Back End](https://glacial-atoll-7078.herokuapp.com)
+* [Back End Repo](https://github.com/raq929/ride-share)
+
 ##Technologies used
 
 ###No straps attached! (HTML5/CSS3)
@@ -39,6 +44,10 @@ After completing the backend, I moved on to the client side. I first did login a
 
 ###Planning documents
 
+* [User Stories](https://docs.google.com/document/d/1H0jIs4mJxUaECFkKBjgEUvmAuhjs1xXskIu1tnxFyMY/edit?usp=sharing)
+
+* ERD
+![RideShare ERD](./images/RideShareERD.png)
 
 
 
