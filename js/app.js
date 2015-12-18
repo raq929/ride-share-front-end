@@ -236,6 +236,7 @@ $(document).ready(function(){
         console.log(err);
       } else {
         rsapi.getRides(ridesCallback);
+        rsHelpers.clearForms();
         $("#createRideForm").hide();
       }
     };
