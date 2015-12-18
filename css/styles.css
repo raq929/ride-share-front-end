@@ -115,7 +115,7 @@ label {
 
 .hiddenCheckbox ~ div {
   max-height: 0;
-  background: #FFE373;
+  background: #FFCB73;
   overflow: hidden;
   margin-top: 8px;
   transition: max-height 1s;
