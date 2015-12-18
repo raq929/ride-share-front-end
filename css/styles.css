@@ -340,5 +340,22 @@ h1 .word2 {
 }
 
 @media screen and (max-width: 480px) {
+  h1 {
+    margin-left: 5%;
+
+  }
+
+  nav label {
+    padding: 19px 5px;
+  }
+
+  .leaflet-popup-content {
+    width: 150px;
+  }
   
+  .leaflet-popup-content h3 {
+    padding:8px;
+    font-weight:600;
+    
+  }
 }
