@@ -225,6 +225,8 @@ $(document).ready(function(){
     // findById returns an array of one item, so pass that item to the template
     var newHTML = editRideFormTemplate(ride);
     $("#editRideFormGoesHere").html(newHTML);
+    // Hide the rides div
+    $("#ridesListHere").hide();
 
   });
 
@@ -252,7 +254,10 @@ $(document).ready(function(){
       if (err){
         console.log(err);
       } else {
+        // clears edit form 
         $("#editRideFormGoesHere").html('');
+        // shows rides list
+        $("#ridesListHere").show();
         rsapi.getRides(ridesCallback);
       }
     };
@@ -304,6 +309,7 @@ $(document).ready(function(){
 
   $("#editRideFormGoesHere").on('click', "#cancelEditRide",function(){
     rsHelpers.clearForms();
+    $("#ridesListHere").show();
     $('#editRideFormGoesHere').html("");
   });
 
@@ -363,6 +369,8 @@ $(document).ready(function(){
     storage.moreClicked? storage.moreClicked = false : storage.moreClicked = true;
     // toggles hidden property of the div
     $("#more" + id).toggleClass('hidden');
+    // changes the text of the button
+    $("#more" + id + "button").val() === "More" ? $("#more" + id + "button").val("Less") : $("#more" + id + "button").val("More");
   });
   
   

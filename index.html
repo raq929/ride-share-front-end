@@ -136,7 +136,7 @@
   </div>
 </div> 
 <div class ="buttons"> 
-  <input type='button' value='More' class='showMoreButton myButton' data-id='{{ride.id}}'>
+  <input type='button' value='More' id="more{{ride.id}}button" class='showMoreButton myButton' data-id='{{ride.id}}'>
 
   {{#if ride.seats_left}}
   {{#unless ride.isOwner}}
