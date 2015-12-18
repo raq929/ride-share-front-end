@@ -45,9 +45,11 @@ var user;
 var rides;
 var rideLine;
 var locations;
+var previousLocations;
 var map;
 
 var setLocationClickHandlers = function(locations, map){
+  
   locations.eachLayer(function(locale) {
     // find the div with the same id as the layer
     var prop = locale.feature.properties;
@@ -138,7 +140,14 @@ var setLocationClickHandlers = function(locations, map){
 
       //get GeoJson and put markers on the map
       rides.getDestinationGeoJSON();
+      // set former locations to previous locations so they can be removed
+      previousLocations = locations;
+      if(previousLocations){
+         map.removeLayer(previousLocations);
+      }
+     
       locations = L.mapbox.featureLayer().addTo(map);
+     
       locations.setGeoJSON(geoJSON);
       setLocationClickHandlers(locations, map);
 
