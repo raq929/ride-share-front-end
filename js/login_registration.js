@@ -64,6 +64,12 @@ $(document).ready(function(){
           user = null;
         $('#logout').css({display: 'none'});
         $("#loginLabel").css({display: 'inline-block'});
+        // hide open forms
+        $("#cancelNewRide").click();
+        $("#cancelEditRide").click();
+
+        // hide new ride button
+        $("#newRideButton").hide();
         rsHelpers.clearForms();
         rsapi.getRides(ridesCallback);
         }
